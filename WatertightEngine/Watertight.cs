@@ -24,5 +24,9 @@ namespace Watertight
             return instance;
         }
 
+        public static Platform GetPlatform()
+        {
+            return GetGame().GetPlatform();
+        }
     }
 }

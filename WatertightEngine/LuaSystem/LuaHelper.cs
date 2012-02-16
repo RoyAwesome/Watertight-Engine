@@ -21,7 +21,25 @@ namespace Watertight
             vm = lstate;
             RegisterLuaFunctions();
             BindClasses();
-            EnableSandbox();     
+            EnableSandbox();
+            PushGlobals();
+        }
+
+        private static void PushGlobals()
+        {
+            if (Watertight.GetPlatform() == Platform.Server)
+            {
+                LuaVM.DoString("CLIENT = false;");
+                LuaVM.DoString("SERVER = true;");
+            }
+            else
+            {
+                LuaVM.DoString("CLIENT = true;");
+                LuaVM.DoString("SERVER = false;");
+            }
+
+
+
         }
 
         private static void EnableSandbox()
