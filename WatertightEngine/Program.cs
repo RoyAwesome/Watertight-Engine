@@ -33,7 +33,7 @@ namespace Watertight
             Game game = new WatertightServer();
 #endif    
 
-            game.Start(60);    
+            game.Start(30);    
    
         }
     }

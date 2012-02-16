@@ -29,16 +29,28 @@ namespace Watertight
             Mod mod = ModManager.GetMod("FileSystemMod");
 
             int expectedRate = (int)((1f / rate) * 1000);
-           
+            float dt = 0;
+            
             while (true)
             {
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
 
-                mod.OnTick(0);
+                foreach (Mod m in ModManager.Mods())
+                {
+                    m.OnTick(dt);
+                }
 
                 watch.Stop();
-                if (watch.ElapsedMilliseconds < expectedRate) Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
+                if (watch.ElapsedMilliseconds < expectedRate)
+                {
+                    Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
+                    dt = 1f / rate;
+                }
+                else
+                {
+                    dt = watch.ElapsedMilliseconds;
+                }
 
             }
         }
