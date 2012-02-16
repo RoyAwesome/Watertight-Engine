@@ -9,7 +9,7 @@ namespace Watertight.Filesystem
 {
     abstract class FileSystemPathFinder
     {
-        public abstract bool ExistsInPath(string file, string path);
+        protected abstract bool ExistsInPath(string file, string path);
         public virtual bool ExistsInPath(Uri path)
         {
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
@@ -18,7 +18,7 @@ namespace Watertight.Filesystem
             return ExistsInPath(FileSystem.ModDirectory + modFile, filePath);
         }
 
-        public abstract StreamReader GetFileStream(string file, string path);
+        protected abstract StreamReader GetFileStream(string file, string path);
         public virtual StreamReader GetFileStream(Uri path)
         {
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
@@ -30,7 +30,7 @@ namespace Watertight.Filesystem
 
     internal class ModFileSearchPath : FileSystemPathFinder
     {
-        public override bool ExistsInPath(string file, string path)
+        protected override bool ExistsInPath(string file, string path)
         {
             
             using(ZipFile zip = new ZipFile(file + ".mod"))
@@ -39,7 +39,7 @@ namespace Watertight.Filesystem
             }
         }
 
-        public override StreamReader GetFileStream(string file, string path)
+        protected override StreamReader GetFileStream(string file, string path)
         {
             ZipFile zip = new ZipFile(file + ".mod");           
             if (!zip.ContainsEntry(path)) throw new ArgumentException("File " + path.ToString() + " Does not exist in mod!");
@@ -52,7 +52,7 @@ namespace Watertight.Filesystem
 
     internal class FileSystemSearchPath : FileSystemPathFinder
     {
-        public override bool ExistsInPath(string file, string path)
+        protected override bool ExistsInPath(string file, string path)
         {
             return File.Exists(file + path);
         }
@@ -74,7 +74,7 @@ namespace Watertight.Filesystem
         }
 
 
-        public override StreamReader GetFileStream(string file, string path)
+        protected override StreamReader GetFileStream(string file, string path)
         {
             return new StreamReader(file + path);
         }
@@ -86,13 +86,15 @@ namespace Watertight.Filesystem
         {
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
-
-            return ExistsInPath(FileSystem.CacheDirectory + modFile, filePath);
+           return ExistsInPath(FileSystem.CacheDirectory + modFile, filePath);
         }
 
-        public override bool ExistsInPath(string file, string path)
+        protected override bool ExistsInPath(string file, string path)
         {
-            return File.Exists(file + path);
+        
+             Console.WriteLine("\t\t Querying: " + file + "/" +  path);
+            
+            return File.Exists(file + "/" + path);
         }
 
         public override StreamReader GetFileStream(Uri path)
@@ -103,9 +105,9 @@ namespace Watertight.Filesystem
             return GetFileStream(FileSystem.CacheDirectory + modFile, filePath);
         }
 
-        public override StreamReader GetFileStream(string file, string path)
+        protected override StreamReader GetFileStream(string file, string path)
         {
-            return new StreamReader(file + path);
+            return new StreamReader(file + "/" + path);
         }
 
     }

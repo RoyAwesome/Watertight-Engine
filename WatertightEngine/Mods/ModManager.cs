@@ -6,6 +6,7 @@ using Watertight.Filesystem;
 using System.IO;
 using LuaInterface;
 using Watertight.LuaSystem;
+using Ionic.Zip;
 
 namespace Watertight.Mods
 {
@@ -96,6 +97,13 @@ namespace Watertight.Mods
             return path.Substring(start + 1).Replace(".mod", "");
         }
 
+        private static void CacheModFile(string file)
+        {
+            ZipFile zip = new ZipFile(file);
+            zip.ExtractAll(FileSystem.CacheDirectory + StripFileStuff(file));
+
+        }
+
         public static void LoadMods()
         {
            foreach(string dir in Directory.GetDirectories(FileSystem.ModDirectory))
@@ -114,7 +122,21 @@ namespace Watertight.Mods
                if (file.Contains(".mod"))
                {
                    Console.WriteLine("Loading Mod: " + file);
+                   //Extract the mod into the cache for faster loading:
+                   if(!Directory.Exists(FileSystem.CacheDirectory + StripFileStuff(file)))
+                   {
+                       Console.WriteLine("Caching Mod File");
+                       CacheModFile(file);
+                   }
+                   if (Directory.GetLastWriteTime(FileSystem.CacheDirectory + StripFileStuff(file)) < File.GetLastWriteTime(file))
+                   {
+                       Console.WriteLine("Mod File modified after cache, Rewriting");
+                       CacheModFile(file);
+                   }
+                   
                    //Load the lua file (Strip the .mod off the end because the .mod searcher will find it for us)
+                   
+
                    Uri path = new Uri("script://" + StripFileStuff(file) + "/mod.lua");
                    LuaFile f = FileSystem.LoadResource<LuaFile>(path);
                    f.DoFile(LuaHelper.LuaVM);

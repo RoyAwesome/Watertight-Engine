@@ -37,7 +37,11 @@ namespace Watertight.Filesystem
         {
             for (int i = 0; i < pathOrder.Length; i++)
             {
-               if (pathOrder[i].ExistsInPath(path)) return pathOrder[i].GetFileStream(path);
+                if (pathOrder[i].ExistsInPath(path))
+                {
+                    if (pathOrder[i] is CacheSystemSearchPath) Console.WriteLine("\tFound " + path.ToString() + " in Cache");
+                    return pathOrder[i].GetFileStream(path);
+                }
             }
             throw new ArgumentException("Cannot find file: " + path.ToString() + " In any search path!");
         }
