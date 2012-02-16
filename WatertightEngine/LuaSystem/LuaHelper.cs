@@ -10,19 +10,18 @@ namespace Watertight
 {
     static class LuaHelper
     {
-        public static Lua LuaVM;
-
-        static LuaHelper()
+        static Lua vm;
+        public static Lua LuaVM
         {
-            LuaVM = new Lua();
-            RegisterLuaFunctions();
-            BindClasses();
-            EnableSandbox();            
+            get { return vm; }
         }
 
-        public static void Init()
+        public static void Init(Lua lstate)
         {
-
+            vm = lstate;
+            RegisterLuaFunctions();
+            BindClasses();
+            EnableSandbox();     
         }
 
         private static void EnableSandbox()

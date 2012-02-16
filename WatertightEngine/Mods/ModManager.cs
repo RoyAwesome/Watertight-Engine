@@ -72,12 +72,12 @@ namespace Watertight.Mods
 
         public static void EnableMod(Mod mod)
         {
-           
-#if CLIENT
-            Uri entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ServerMain);
-#else
-            Uri entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ServerMain);
-#endif
+            Uri entry;
+            if(Watertight.GetGame().GetPlatform() == Platform.Server)
+                entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ServerMain);
+            else
+                entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ClientMain);
+
             LuaFile entrypoint = FileSystem.LoadResource<LuaFile>(entry);
             entrypoint.DoFile(LuaHelper.LuaVM);
             Console.WriteLine("Loaded mod: " + mod.Descriptor.Name + " Version: " + mod.Descriptor.Version);

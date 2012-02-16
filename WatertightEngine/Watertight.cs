@@ -7,6 +7,10 @@ namespace Watertight
 {
     static class Watertight
     {
+        internal static string ImplName = "Watertight Engine";
+        internal static string Version = "1.0.0";
+
+
         private static Game instance = null;
 
         public static void SetGame(Game game)
