@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using LuaInterface;
 using System.Reflection;
+using System.IO;
 
 namespace Watertight
 {
@@ -26,7 +27,15 @@ namespace Watertight
 
         private static void EnableSandbox()
         {
-            LuaVM.DoFile("sandbox.lua");
+            if (File.Exists("sandbox.lua"))
+                LuaVM.DoFile("sandbox.lua");
+            else
+            {
+                Console.WriteLine("----------WARNING--------");
+                Console.WriteLine(">Sanbox file not found, this makes running mods dangerous");
+                Console.WriteLine(">Find the sandbox.lua file and fix it!");
+
+            }
         }
 
         private static void RegisterLuaFunctions()

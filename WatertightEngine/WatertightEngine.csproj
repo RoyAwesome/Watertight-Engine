@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Filesystem\FileSystemPath.cs" />
     <Compile Include="Filesystem\ResourceLoaders.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="LuaSystem\BindClass.cs" />
     <Compile Include="LuaSystem\BindFunction.cs" />
     <Compile Include="Filesystem\Filesystem.cs" />
@@ -89,7 +90,9 @@
     <Compile Include="Renderer\GL11BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
-    <Compile Include="TestObject.cs" />
+    <Compile Include="Watertight.cs" />
+    <Compile Include="WatertightClient.cs" />
+    <Compile Include="WatertightServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />

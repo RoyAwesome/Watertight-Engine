@@ -5,12 +5,10 @@ using System.Text;
 
 namespace Watertight
 {
-    class TestObject
+    interface Game
     {
-        public void foo()
-        {
-            Console.WriteLine("Foo!");
-        }
+
+
 
     }
 }
