@@ -42,21 +42,11 @@ namespace Watertight.Filesystem
             throw new ArgumentException("Cannot find file: " + path.ToString() + " In any search path!");
         }
 
-        public static StreamReader GetFileStream(string file, string path)
-        {
-            for (int i = 0; i < pathOrder.Length; i++)
-            {
-                if (pathOrder[i].ExistsInPath(file, path))
-                {
-                    return pathOrder[i].GetFileStream(file, path);  
-                }              
-            }
-            throw new ArgumentException("Cannot find file: " + file + " In any search path!");
-        }
-
         public static E LoadResource<E>(Uri path) where E : Resource
         {
-            return LoadResource<E>(GetFileStream(path));
+            E r = LoadResource<E>(GetFileStream(path));
+            r.Path = path;
+            return r;
         }
 
         public static E LoadResource<E>(StreamReader reader) where E : Resource
