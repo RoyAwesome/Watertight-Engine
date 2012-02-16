@@ -27,8 +27,8 @@ namespace Watertight.Filesystem
             factories[typeof(LuaFile)] = new LuaFileFactory();
             factories[typeof(ModDescriptor)] = new DescriptorFactory();
 
-            pathOrder = new FileSystemPathFinder[] { new CacheSystemSearchPath() ,
-                                                    new FileSystemSearchPath(),
+            pathOrder = new FileSystemPathFinder[] { new FileSystemSearchPath(CacheDirectory) ,
+                                                    new FileSystemSearchPath(ModDirectory),
                                                     new ModFileSearchPath() };
 
         }

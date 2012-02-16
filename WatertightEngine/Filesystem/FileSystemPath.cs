@@ -9,6 +9,13 @@ namespace Watertight.Filesystem
 {
     abstract class FileSystemPathFinder
     {
+        protected string directory;
+
+        public FileSystemPathFinder(string folder)
+        {
+            this.directory = folder;
+        }
+
         protected abstract bool ExistsInPath(string file, string path);
         public virtual bool ExistsInPath(Uri path)
         {
@@ -24,12 +31,18 @@ namespace Watertight.Filesystem
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
 
-            return GetFileStream(FileSystem.ModDirectory + modFile, filePath);
+            return GetFileStream(directory + modFile, filePath);
         }
     }
 
     internal class ModFileSearchPath : FileSystemPathFinder
     {
+        public ModFileSearchPath()
+            : base(FileSystem.ModDirectory)
+        {
+
+        }
+
         protected override bool ExistsInPath(string file, string path)
         {
             
@@ -52,6 +65,12 @@ namespace Watertight.Filesystem
 
     internal class FileSystemSearchPath : FileSystemPathFinder
     {
+        public FileSystemSearchPath(string folder)
+            : base(folder)
+        {
+
+        }
+
         protected override bool ExistsInPath(string file, string path)
         {
             return File.Exists(file + path);
@@ -62,7 +81,7 @@ namespace Watertight.Filesystem
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
 
-            return ExistsInPath(FileSystem.ModDirectory + modFile + "/", filePath);
+            return ExistsInPath(directory + modFile + "/", filePath);
         }
 
         public override StreamReader GetFileStream(Uri path)
@@ -70,7 +89,7 @@ namespace Watertight.Filesystem
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
 
-            return GetFileStream(FileSystem.ModDirectory + modFile + "/", filePath);
+            return GetFileStream(directory + modFile + "/", filePath);
         }
 
 
@@ -80,33 +99,5 @@ namespace Watertight.Filesystem
         }
     }
 
-    internal class CacheSystemSearchPath : FileSystemPathFinder
-    {
-        public override bool ExistsInPath(Uri path)
-        {
-            string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
-            string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
-           return ExistsInPath(FileSystem.CacheDirectory + modFile, filePath);
-        }
-
-        protected override bool ExistsInPath(string file, string path)
-        {
-            return File.Exists(file + "/" + path);
-        }
-
-        public override StreamReader GetFileStream(Uri path)
-        {
-            string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
-            string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
-
-            return GetFileStream(FileSystem.CacheDirectory + modFile, filePath);
-        }
-
-        protected override StreamReader GetFileStream(string file, string path)
-        {
-            return new StreamReader(file + "/" + path);
-        }
-
-    }
-
+    
 }
