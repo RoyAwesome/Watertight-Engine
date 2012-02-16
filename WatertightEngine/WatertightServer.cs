@@ -15,7 +15,7 @@ namespace Watertight
 
 
 
-        public void Start()
+        public void Start(int rate)
         {
             
             Watertight.SetGame(this);
@@ -28,7 +28,8 @@ namespace Watertight
            
             Mod mod = ModManager.GetMod("FileSystemMod");
 
-
+            int expectedRate = (int)((1f / rate) * 1000);
+           
             while (true)
             {
                 Stopwatch watch = new Stopwatch();
@@ -37,7 +38,7 @@ namespace Watertight
                 mod.OnTick(0);
 
                 watch.Stop();
-                if (watch.ElapsedMilliseconds < 16) Thread.Sleep(16 - (int)watch.ElapsedMilliseconds);
+                if (watch.ElapsedMilliseconds < expectedRate) Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
 
             }
         }

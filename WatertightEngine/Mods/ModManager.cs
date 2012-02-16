@@ -14,7 +14,12 @@ namespace Watertight.Mods
     {
         
         static Dictionary<string, Mod> loadedMods = new Dictionary<string, Mod>();
-        
+
+        public static IEnumerable<Mod> Mods()
+        {
+            return loadedMods.Values;
+        }
+
         [BindFunction("_G", "GetMod")]
         public static Mod GetMod(string name)
         {

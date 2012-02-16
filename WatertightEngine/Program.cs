@@ -2,25 +2,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using LuaInterface;
-using System.Reflection;
-using OpenTK;
-using OpenTK.Platform;
-using OpenTK.Graphics;
 using System.Diagnostics;
-using System.Threading;
-
-using Watertight.Renderer;
-using Watertight.Filesystem;
 using System.IO;
-using Watertight.Mods;
-using Watertight.LuaSystem;
-
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using LuaInterface;
 using Newtonsoft.Json;
-
+using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Input;
+using OpenTK.Platform;
+using Watertight.Filesystem;
+using Watertight.LuaSystem;
+using Watertight.Mods;
+using Watertight.Renderer;
 
 
 namespace Watertight
@@ -36,7 +33,7 @@ namespace Watertight
             Game game = new WatertightServer();
 #endif    
 
-            game.Start();    
+            game.Start(60);    
    
         }
     }

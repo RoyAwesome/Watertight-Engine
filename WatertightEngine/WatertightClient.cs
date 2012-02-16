@@ -14,7 +14,9 @@ namespace Watertight
 {
     class WatertightClient : Game
     {
-        public void Start()
+        
+
+        public void Start(int rate)
         {
             Watertight.SetGame(this);
 
@@ -27,28 +29,50 @@ namespace Watertight
             window.Visible = true;
 
 
-            Mod mod = ModManager.GetMod("FileSystemMod");
-
+           
             BatchVertexRenderer renderer = new GL11BatchVertexRenderer();
 
             window.KeyPress += new EventHandler<KeyPressEventArgs>(window_KeyPress);
 
+            int expectedRate = (int)((1f / rate) * 1000);
+            float dt = 0;
             while (window.Exists)
             {
+                
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
                 window.ProcessEvents();
                 GL.Clear(ClearBufferMask.ColorBufferBit);
                 GL.ClearColor(0, 0, 0, 1);
 
-                mod.OnRender(0, renderer);
+                foreach (Mod m in ModManager.Mods())
+                {
+                    m.OnTick(dt);
+                }
+
+                renderer.Begin();
+
+                foreach (Mod m in ModManager.Mods())
+                {
+                    m.OnRender(dt, renderer);                    
+                }
+                renderer.End();
+
 
                 renderer.Draw();
 
 
                 window.Context.SwapBuffers();
                 watch.Stop();
-                if (watch.ElapsedMilliseconds < 16) Thread.Sleep(16 - (int)watch.ElapsedMilliseconds);
+                if (watch.ElapsedMilliseconds < expectedRate)
+                {
+                    Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
+                    dt = 1f / rate;
+                }
+                else
+                {
+                    dt = watch.ElapsedMilliseconds;
+                }
             }
 
         }

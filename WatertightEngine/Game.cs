@@ -19,6 +19,6 @@ namespace Watertight
 
         Platform GetPlatform();
 
-        void Start();
+        void Start(int rate);
     }
 }
