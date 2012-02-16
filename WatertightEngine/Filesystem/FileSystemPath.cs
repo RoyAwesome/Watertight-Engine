@@ -91,9 +91,6 @@ namespace Watertight.Filesystem
 
         protected override bool ExistsInPath(string file, string path)
         {
-        
-             Console.WriteLine("\t\t Querying: " + file + "/" +  path);
-            
             return File.Exists(file + "/" + path);
         }
 

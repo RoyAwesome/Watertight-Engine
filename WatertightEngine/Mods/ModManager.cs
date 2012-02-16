@@ -100,7 +100,7 @@ namespace Watertight.Mods
         private static void CacheModFile(string file)
         {
             ZipFile zip = new ZipFile(file);
-            zip.ExtractAll(FileSystem.CacheDirectory + StripFileStuff(file));
+            zip.ExtractAll(FileSystem.CacheDirectory + StripFileStuff(file), ExtractExistingFileAction.OverwriteSilently);
 
         }
 
@@ -125,12 +125,10 @@ namespace Watertight.Mods
                    //Extract the mod into the cache for faster loading:
                    if(!Directory.Exists(FileSystem.CacheDirectory + StripFileStuff(file)))
                    {
-                       Console.WriteLine("Caching Mod File");
                        CacheModFile(file);
                    }
                    if (Directory.GetLastWriteTime(FileSystem.CacheDirectory + StripFileStuff(file)) < File.GetLastWriteTime(file))
                    {
-                       Console.WriteLine("Mod File modified after cache, Rewriting");
                        CacheModFile(file);
                    }
                    
