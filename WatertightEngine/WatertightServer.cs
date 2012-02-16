@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Watertight.Mods;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading;
 using LuaInterface;
+using Watertight.Mods;
 
 namespace Watertight
 {

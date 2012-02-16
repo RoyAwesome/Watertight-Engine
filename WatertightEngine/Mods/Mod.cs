@@ -12,8 +12,6 @@ namespace Watertight.Mods
 {
     class Mod : Hookable
     {
-        bool enabled = false;
-
         ModDescriptor descriptor;
         
         string modFile;
