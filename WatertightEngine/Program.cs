@@ -2,6 +2,7 @@
 
 
 
+using System;
 namespace Watertight
 {
     class Program
@@ -9,6 +10,8 @@ namespace Watertight
      
         static void Main(string[] args)
         {
+            
+            AppDomain.CurrentDomain.AppendPrivatePath("bin/");
 #if CLIENT
             Game game = new WatertightClient();
 #else
