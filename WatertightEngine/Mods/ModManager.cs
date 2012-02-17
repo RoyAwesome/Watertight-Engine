@@ -104,8 +104,10 @@ namespace Watertight.Mods
 
         private static void CacheModFile(string file)
         {
-            ZipFile zip = new ZipFile(file);
-            zip.ExtractAll(FileSystem.CacheDirectory + StripFileStuff(file), ExtractExistingFileAction.OverwriteSilently);
+            using (ZipFile zip = new ZipFile(file))
+            {
+                zip.ExtractAll(FileSystem.CacheDirectory + StripFileStuff(file), ExtractExistingFileAction.OverwriteSilently);
+            }
 
         }
 
@@ -117,8 +119,11 @@ namespace Watertight.Mods
                if(File.Exists(dir + "/mod.lua"))
                {
                    Console.WriteLine("Loading Mod: " + dir);
-                   LuaFile f = FileSystem.LoadResource<LuaFile>(new StreamReader(dir + "/mod.lua"));
-                   f.DoFile(LuaHelper.LuaVM);
+                   using (StreamReader r = new StreamReader(dir + "/mod.lua"))
+                   {
+                       LuaFile f = FileSystem.LoadResource<LuaFile>(r);
+                       f.DoFile(LuaHelper.LuaVM);
+                   }
                }
            }
 
