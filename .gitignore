@@ -43,3 +43,4 @@ Thumbs.db
 WatertightEngine/bin
 WatertightEngine/obj
 *.suo
+*.user
