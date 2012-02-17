@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="Filesystem\FileSystemPath.cs" />
     <Compile Include="Filesystem\ResourceLoaders.cs" />
     <Compile Include="Game.cs" />
@@ -119,6 +120,9 @@
     <Compile Include="Renderer\GL11BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Simulation\Entity.cs" />
+    <Compile Include="Simulation\EntityController.cs" />
     <Compile Include="Watertight.cs" />
     <Compile Include="WatertightClient.cs" />
     <Compile Include="WatertightServer.cs" />

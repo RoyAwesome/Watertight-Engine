@@ -5,7 +5,7 @@ using Watertight.Mods;
 
 namespace Watertight
 {
-    class WatertightServer : Game
+    class WatertightServer : Server
     {
 
 
@@ -68,8 +68,11 @@ namespace Watertight
         {
             return Platform.Server;
         }
-
-
         
+
+        public void CreateWorld(string WorldName)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -12,7 +12,7 @@ using LuaInterface;
 
 namespace Watertight
 {
-    class WatertightClient : Game
+    class WatertightClient : Client
     {
         
 
