@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Watertight.Mods;
-using OpenTK;
-using Watertight.Renderer;
-using System.Diagnostics;
-using OpenTK.Graphics.OpenGL;
 using System.Threading;
 using LuaInterface;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using Watertight.Mods;
+using Watertight.Renderer;
 
 namespace Watertight
 {
