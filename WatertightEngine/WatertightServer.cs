@@ -34,7 +34,7 @@ namespace Watertight
             float dt = 0;
             serverthread = new ServerNetworkingThread(2861);
             server =  new Thread(new ThreadStart(serverthread.Init));
-            
+            server.Start();
             while (true)
             {
                 Stopwatch watch = new Stopwatch();

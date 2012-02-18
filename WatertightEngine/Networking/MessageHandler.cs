@@ -13,9 +13,10 @@ namespace Watertight.Networking
 
         protected NetServer server;
 
-        public void SetServer(NetServer server)
+        public MessageHandler(NetServer server, short id)
         {
             this.server = server;
+            this.packetID = id;
         }
 
         public abstract void ProcessMessage(NetIncomingMessage message);

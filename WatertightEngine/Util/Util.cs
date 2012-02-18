@@ -14,9 +14,9 @@ namespace Watertight
             Assembly asm = Assembly.GetEntryAssembly();
             foreach (Type t in asm.GetTypes())
             {
-                foreach (Attribute attrib in Attribute.GetCustomAttributes(t))
+                foreach (Attribute attrib in t.GetCustomAttributes(attribute.GetType(), false))
                 {
-                    if(attrib.GetType().IsSubclassOf(attribute)) types.Add(t);
+                    types.Add(t);
                 }
             }
             return types.ToArray();

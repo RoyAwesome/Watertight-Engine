@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Lidgren.Network;
+using Watertight.EntitySystem;
 
 namespace Watertight.Networking
 {
@@ -22,15 +23,7 @@ namespace Watertight.Networking
 
         public void Init()
         {
-            foreach (Type t in Util.TypesWithAttribute(typeof(NetworkHandler)))
-            {
-
-                int id = (t.GetCustomAttributes(typeof(NetworkHandler), true)[0] as NetworkHandler).PacketID;
-                MessageHandler handler = (MessageHandler)t.GetConstructor(Type.EmptyTypes).Invoke(null);
-                packetHandlers[id] = handler;
-                GameConsole.ConsoleMessage("Registering new handler for packet [" + id + "]: " + handler.ToString());
-            }
-
+            GameConsole.ConsoleMessage("Starting Server");
             NetPeerConfiguration config = new NetPeerConfiguration(Watertight.ImplName + Watertight.Version);
             config.Port = port;
             config.UseMessageRecycling = true;
@@ -38,6 +31,7 @@ namespace Watertight.Networking
 
             server = new NetServer(config);
             server.Start();
+            packetHandlers[30] = new NetworkedEntityUpdateHandler(server, 30);
 
             
         }

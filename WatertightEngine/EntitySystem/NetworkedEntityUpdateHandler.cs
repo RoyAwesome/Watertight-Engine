@@ -10,7 +10,10 @@ namespace Watertight.EntitySystem
     [NetworkHandler(30)]
     class NetworkedEntityUpdateHandler : MessageHandler
     {
+        public NetworkedEntityUpdateHandler(NetServer server, short id) : base(server, id)
+        {
 
+        }
         public override void ProcessMessage(NetIncomingMessage message)
         {
             packetID = message.ReadInt16();
