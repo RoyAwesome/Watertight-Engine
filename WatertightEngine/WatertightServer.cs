@@ -9,7 +9,7 @@ namespace Watertight
     class WatertightServer : Server
     {
 
-
+        int rate;
 
 
         public void Start(int rate)
@@ -23,9 +23,8 @@ namespace Watertight
 
             GameConsole.Initialize();
 
+            this.rate = rate;
            
-            Mod mod = ModManager.GetMod("FileSystemMod");
-
             int expectedRate = (int)((1f / rate) * 1000);
             float dt = 0;
             
@@ -81,6 +80,12 @@ namespace Watertight
         public void Shutdown()
         {
             Environment.Exit(0);
+        }
+
+
+        public int GetRate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

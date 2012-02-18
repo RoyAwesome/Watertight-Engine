@@ -1,4 +1,4 @@
-﻿#define CLIENT
+﻿#define SERVER
 
 
 

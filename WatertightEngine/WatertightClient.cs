@@ -14,7 +14,7 @@ namespace Watertight
 {
     class WatertightClient : Client
     {
-        
+        int rate;
 
         public void Start(int rate)
         {
@@ -30,13 +30,13 @@ namespace Watertight
             GameWindow window = new GameWindow();
             window.Visible = true;
 
-
+            this.rate = rate;
            
             BatchVertexRenderer renderer = new GL11BatchVertexRenderer();
 
             window.KeyPress += new EventHandler<KeyPressEventArgs>(window_KeyPress);
 
-            int expectedRate = (int)((1f / rate) * 1000);
+            int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
             while (window.Exists)
             {
@@ -66,13 +66,14 @@ namespace Watertight
 
                 window.Context.SwapBuffers();
                 watch.Stop();
-                if (watch.ElapsedMilliseconds < expectedRate)
+                if (watch.ElapsedMilliseconds < rateInMillies)
                 {
-                    Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
+                    Thread.Sleep(rateInMillies - (int)watch.ElapsedMilliseconds);
                     dt = 1f / rate;
                 }
                 else
                 {
+                    GameConsole.ConsoleMessage("[WARN] Thread took longer than " + rateInMillies + "ms!");
                     dt = watch.ElapsedMilliseconds;
                 }
             }
@@ -114,6 +115,12 @@ namespace Watertight
         public void Shutdown()
         {
             Environment.Exit(0);
+        }
+
+
+        public int GetRate()
+        {
+            return rate;
         }
     }
 }
