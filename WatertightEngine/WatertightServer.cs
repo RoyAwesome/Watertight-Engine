@@ -21,6 +21,7 @@ namespace Watertight
             ModManager.LoadMods();
             ModManager.EnableMods();
 
+            GameConsole.Initialize();
 
            
             Mod mod = ModManager.GetMod("FileSystemMod");

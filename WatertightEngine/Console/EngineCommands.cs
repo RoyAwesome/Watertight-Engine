@@ -10,6 +10,7 @@ namespace Watertight
         [ConsoleCommand("Msg")]
         public static void Msg(ConCommandArgs args)
         {
+           
             GameConsole.ConsoleMessage(args.ArgString);
         }
 

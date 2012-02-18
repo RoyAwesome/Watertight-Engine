@@ -18,16 +18,16 @@ namespace Watertight
     class ConMessage
     {
         public string text;
-        public TimeSpan TTL;
+        public float TTL;
 
-        public ConMessage(string text, TimeSpan TTL)
+        public ConMessage(string text, float TTL)
         {
             this.text = text;
             this.TTL = TTL;
         }
 
         public ConMessage(string text)
-            : this(text, TimeSpan.FromSeconds(GameConsole.DefaultTextLife))
+            : this(text, GameConsole.DefaultTextLife)
         {
         }
 
@@ -189,7 +189,9 @@ namespace Watertight
         #region Output
         public static void ConsoleMessage(string text)
         {
-            if (StdOutput) System.Console.WriteLine("[Game Console] " + text);
+            string prefix = (Watertight.GetPlatform() == Platform.Client) ? "[Client] " : "[Server] ";
+            text = prefix + text;
+            if (StdOutput) System.Console.WriteLine(text);
             AllMessages.Add(new ConMessage(text));
         }
 
@@ -199,21 +201,20 @@ namespace Watertight
             foreach (ConMessage s in AllMessages)
             {
                 if (DispAllMessages) builder.AppendLine(s.text);
-                if (!DispAllMessages && s.TTL > TimeSpan.Zero) builder.AppendLine(s.text);
+                if (!DispAllMessages && s.TTL > 0) builder.AppendLine(s.text);
             }
 
             return builder.ToString();
         }
 
 
-        public static void Update(GameTime time)
+        public static void Update(float time)
         {
             foreach (ConMessage msg in AllMessages)
             {
-                if (msg.TTL > TimeSpan.Zero) msg.TTL -= time.ElapsedGameTime;
+                if (msg.TTL > 0) msg.TTL -= time;
             }
-            gui.SetConsoleText(CollapseString());
-
+            
         }
 
 

@@ -17,7 +17,7 @@ namespace Watertight.Networking
             this.server = server;
         }
 
-        public sealed void ProcessMessage(NetIncomingMessage message)
+        public void ProcessMessage(NetIncomingMessage message)
         {
             packetID = message.ReadInt16();
             Guid id = new Guid(message.ReadBytes(16));
@@ -31,7 +31,7 @@ namespace Watertight.Networking
         public abstract void HandleMessage(NetIncomingMessage message);
 
 
-        public sealed void SendMessage<E>(E outbound) where E : NetworkableType
+        public void SendMessage<E>(E outbound) where E : NetworkableType
         {
             NetOutgoingMessage message = server.CreateMessage();
             message.Write(packetID);

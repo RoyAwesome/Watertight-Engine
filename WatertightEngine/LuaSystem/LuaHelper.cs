@@ -107,7 +107,7 @@ namespace Watertight
         [BindFunction("_G", "print")]
         public static void Print(object s)
         {
-            Console.WriteLine(s.ToString());
+            GameConsole.ConsoleMessage(s.ToString());
         }
 
 

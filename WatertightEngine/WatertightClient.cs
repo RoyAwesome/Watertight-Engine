@@ -24,6 +24,8 @@ namespace Watertight
             ModManager.LoadMods();
             ModManager.EnableMods();
 
+            GameConsole.Initialize();
+
 
             GameWindow window = new GameWindow();
             window.Visible = true;
