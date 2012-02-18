@@ -83,7 +83,7 @@ namespace Watertight
             if (e.KeyChar == 'c')
             {
                 Mod m = ModManager.GetMod("FileSystemMod");
-                Console.WriteLine(">\tGot Mod " + m.GetName());
+                GameConsole.ConsoleMessage(">\tGot Mod " + m.GetName());
                 m.DoMain();
             }
         }
@@ -106,6 +106,12 @@ namespace Watertight
         }
 
 
-        
+
+
+
+        public void Shutdown()
+        {
+            Environment.Exit(0);
+        }
     }
 }

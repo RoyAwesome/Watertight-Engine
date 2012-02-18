@@ -2,6 +2,7 @@
 using System.Threading;
 using LuaInterface;
 using Watertight.Mods;
+using System;
 
 namespace Watertight
 {
@@ -73,6 +74,12 @@ namespace Watertight
         public void CreateWorld(string WorldName)
         {
             throw new System.NotImplementedException();
+        }
+
+
+        public void Shutdown()
+        {
+            Environment.Exit(0);
         }
     }
 }
