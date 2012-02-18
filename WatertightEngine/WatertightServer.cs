@@ -3,6 +3,7 @@ using System.Threading;
 using LuaInterface;
 using Watertight.Mods;
 using System;
+using Watertight.Networking;
 
 namespace Watertight
 {
@@ -11,6 +12,10 @@ namespace Watertight
 
         int rate;
 
+
+        Thread server;
+        ServerNetworkingThread serverthread;
+        
 
         public void Start(int rate)
         {
@@ -27,6 +32,8 @@ namespace Watertight
            
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
+            serverthread = new ServerNetworkingThread(2861);
+            server =  new Thread(new ThreadStart(serverthread.Init));
             
             while (true)
             {

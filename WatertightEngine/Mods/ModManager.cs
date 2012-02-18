@@ -62,7 +62,6 @@ namespace Watertight.Mods
             d.ServerMain = (string)((string)mod["ServerMain"]).Clone();
             d.ClientMain = (string)((string)mod["ClientMain"]).Clone();
             
-            Console.WriteLine(d.ToString());
             return d;
         }
 

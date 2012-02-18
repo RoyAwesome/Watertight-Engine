@@ -8,8 +8,9 @@ function OnInit()
 end
 m:RegisterHook("Init", OnInit);
 
-
+--[[
 function OnTick(dt)
-   print("tick tock");
+
 end
 m:RegisterHook("OnTick", OnTick);
+]]

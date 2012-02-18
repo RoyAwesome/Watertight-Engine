@@ -7,7 +7,7 @@ namespace Watertight.Networking
 {
     interface NetworkingThread
     {
-        void Init(int port);
+        void Init();
 
         void Run();        
     }

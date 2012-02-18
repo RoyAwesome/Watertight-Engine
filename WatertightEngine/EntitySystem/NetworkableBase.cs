@@ -6,7 +6,7 @@ using Lidgren.Network;
 
 namespace Watertight.Networking
 {
-    abstract class NetworkableType
+    abstract class NetworkableBase
     {
         Guid networkid = Guid.Empty;
 
@@ -21,12 +21,12 @@ namespace Watertight.Networking
             }
         }
 
-        public NetworkableType() : this(Guid.Empty)
+        public NetworkableBase() : this(Guid.Empty)
         {
                         
         }
 
-        public NetworkableType(Guid id)
+        public NetworkableBase(Guid id)
         {
             NetworkID = id;
         }

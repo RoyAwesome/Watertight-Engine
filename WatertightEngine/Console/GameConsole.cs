@@ -7,13 +7,13 @@ using System.Reflection;
 namespace Watertight
 {
 
-    private struct ConsoleCommand
+    struct ConsoleCommand
     {
         public MethodInfo cmd;
         public bool Silent;
     }
 
-    private class ConMessage
+    class ConMessage
     {
         public string text;
         public float TTL;

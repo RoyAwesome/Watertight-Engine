@@ -7,16 +7,16 @@ namespace Watertight.Networking
 {
     class NetworkVisibleContainer
     {
-        static Dictionary<Guid, NetworkableType> trackedObjects = new Dictionary<Guid, NetworkableType>();
+        static Dictionary<Guid, NetworkableBase> trackedObjects = new Dictionary<Guid, NetworkableBase>();
 
 
-        public static void RegisterNetworkableType(Guid networkID, NetworkableType type)
+        public static void RegisterNetworkableType(Guid networkID, NetworkableBase type)
         {
             if (trackedObjects.ContainsKey(networkID)) GameConsole.ConsoleMessage("[NET] Warning: Trying to register networked object twice!");
             trackedObjects[networkID] = type;
         }
 
-        public static NetworkableType GetNetworkedObject(Guid id)
+        public static NetworkableBase GetNetworkedObject(Guid id)
         {
             if (!trackedObjects.ContainsKey(id))
             {
