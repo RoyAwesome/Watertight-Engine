@@ -25,7 +25,7 @@ namespace Watertight
 
             this.rate = rate;
            
-            int expectedRate = (int)((1f / rate) * 1000);
+            int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
             
             while (true)
@@ -39,13 +39,14 @@ namespace Watertight
                 }
 
                 watch.Stop();
-                if (watch.ElapsedMilliseconds < expectedRate)
+                if (watch.ElapsedMilliseconds < rateInMillies)
                 {
-                    Thread.Sleep(expectedRate - (int)watch.ElapsedMilliseconds);
+                    Thread.Sleep(rateInMillies - (int)watch.ElapsedMilliseconds);
                     dt = 1f / rate;
                 }
                 else
                 {
+                    GameConsole.ConsoleMessage("[WARN] Thread took longer than " + rateInMillies + "ms!");                    
                     dt = watch.ElapsedMilliseconds;
                 }
 
