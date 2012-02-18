@@ -38,7 +38,10 @@ namespace Watertight.Networking
 
         public void Run()
         {
-            throw new NotImplementedException();
+            while (true)
+            {
+                NetIncomingMessage message = server.ReadMessage();
+            }
         }
 
        
