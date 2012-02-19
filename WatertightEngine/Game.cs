@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Watertight
 {
+    public delegate void NetworkedTask();
+
     public enum Platform
     {
         Client,
@@ -48,5 +50,6 @@ namespace Watertight
         /// Shuts down the engine
         /// </summary>
         void Shutdown();
+
     }
 }

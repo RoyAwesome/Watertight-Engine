@@ -1,6 +1,4 @@
-﻿#define SERVER
-
-
+﻿
 
 using System;
 using System.IO;

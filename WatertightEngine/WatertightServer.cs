@@ -3,20 +3,24 @@ using System.Threading;
 using LuaInterface;
 using Watertight.Mods;
 using System;
+using System.Collections.Generic;
 using Watertight.Networking;
+using System.Collections.Concurrent;
+using Lidgren.Network;
 
 namespace Watertight
 {
+    
+
     class WatertightServer : Server
     {
 
         int rate;
 
 
-        Thread server;
-        ServerNetworkingThread serverthread;
-        
+       List<NetworkedTask> networkTasks = new List<NetworkedTask>();
 
+      
         public void Start(int rate)
         {
             
@@ -32,14 +36,45 @@ namespace Watertight
            
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
-            serverthread = new ServerNetworkingThread(2861);
-            server =  new Thread(new ThreadStart(serverthread.Init));
+            GameConsole.ConsoleMessage("Starting Server");
+            NetPeerConfiguration config = new NetPeerConfiguration(Watertight.ImplName + Watertight.Version);
+            config.Port = 2861;
+            config.UseMessageRecycling = true;
+
+
+            NetServer server = new NetServer(config);
             server.Start();
+
             while (true)
             {
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
 
+                NetIncomingMessage message = null;
+                while ((message = server.ReadMessage()) != null)
+                {
+                    switch (message.MessageType)
+                    {
+                        case NetIncomingMessageType.VerboseDebugMessage:
+                        case NetIncomingMessageType.DebugMessage:
+                        case NetIncomingMessageType.WarningMessage:
+                        case NetIncomingMessageType.ErrorMessage:
+                            Console.WriteLine(message.ReadString());
+                            break;
+
+
+                        case NetIncomingMessageType.Data:
+                            byte id = message.PeekByte();
+                            Packet p = PacketManager.GetPacket(id);
+                            if (p != null)
+                            {
+                                p.Decode(message);
+
+                            }
+                            break;
+                    }
+                }
+            
                 foreach (Mod m in ModManager.Mods())
                 {
                     m.OnTick(dt);
@@ -95,5 +130,8 @@ namespace Watertight
         {
             throw new NotImplementedException();
         }
+
+
+      
     }
 }

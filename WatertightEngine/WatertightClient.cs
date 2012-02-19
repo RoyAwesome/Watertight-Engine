@@ -9,6 +9,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Watertight.Mods;
 using Watertight.Renderer;
+using Watertight.Networking;
+using Lidgren.Network;
 
 namespace Watertight
 {
@@ -16,6 +18,7 @@ namespace Watertight
     {
         int rate;
 
+      
         public void Start(int rate)
         {
             Watertight.SetGame(this);
@@ -36,6 +39,24 @@ namespace Watertight
 
             window.KeyPress += new EventHandler<KeyPressEventArgs>(window_KeyPress);
 
+            int port = 2861;
+
+            GameConsole.ConsoleMessage("Starting Client");
+            NetPeerConfiguration config = new NetPeerConfiguration(Watertight.ImplName + Watertight.Version);
+            config.Port = port + 1;
+            config.UseMessageRecycling = true;
+
+
+            NetClient client = new NetClient(config);
+            client.Start();
+
+            NetOutgoingMessage connectMessage = client.CreateMessage();
+            ConnectPacket connect = new ConnectPacket();
+            connect.Encode(ref connectMessage);
+
+            client.Connect("localhost", port, connectMessage);
+
+           
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
             while (window.Exists)
@@ -121,6 +142,12 @@ namespace Watertight
         public int GetRate()
         {
             return rate;
+        }
+
+
+        public void AddToNetworkProcessQueue(NetworkedTask method)
+        {
+            throw new NotImplementedException();
         }
     }
 }
