@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Watertight.Renderer.Shaders;
 
 namespace Watertight.Renderer
 {
@@ -17,7 +18,7 @@ namespace Watertight.Renderer
     {
         public static RenderMode RenderMode = RenderMode.GL30;
 
-
+        public Shader ActiveShader { get; set; }
 
 
         protected List<float> vertexBuffer = new List<float>();
@@ -36,6 +37,8 @@ namespace Watertight.Renderer
 
         protected int numVerticies = 0;
 
+
+        
 
         public void Begin()
         {
@@ -75,7 +78,8 @@ namespace Watertight.Renderer
                 if (uvBuffer.Count % 2 != 0) throw new BatcherException("UV Buffer Size not divisbile by 2!");
                 if (uvBuffer.Count / 2 != numVerticies) throw new BatcherException("Buffer Size Mismatch! UV Buffer != numVerticies");
             }
-
+            if (ActiveShader == null) throw new BatcherException("Shader cannot be null!");
+            ActiveShader.Assign();
             doFlush();
 
             flushed = true;
@@ -88,10 +92,25 @@ namespace Watertight.Renderer
         {
             if (batching) throw new BatcherException("Cannot Render while Batching!");
             if (!flushed) throw new BatcherException("Cannot Render without flushing the batch!");
+            if (ActiveShader == null) throw new BatcherException("Shader cannot be null!");
+            ActiveShader.Assign();
             doDraw();
         }
         protected abstract void doDraw();
 
-        
+
+
+        public void DumpBuffers()
+        {
+            Console.Write("Vertex Buffer \t\t\t ColorBuffer\n");
+            for (int i = 0; i < vertexBuffer.Count; i++)
+            {
+                Console.Write(vertexBuffer[i] + "\t\t\t");
+                Console.WriteLine(colorBuffer[i]);
+
+
+            }
+
+        }
     }
 }

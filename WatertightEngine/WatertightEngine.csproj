@@ -156,6 +156,7 @@
     <Compile Include="Networking\Packet\PingPacket.cs" />
     <Compile Include="EntitySystem\NetworkVisibleContainer.cs" />
     <Compile Include="Networking\Packet\Packet.cs" />
+    <Compile Include="Networking\Session.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\BatchAccessors.cs" />

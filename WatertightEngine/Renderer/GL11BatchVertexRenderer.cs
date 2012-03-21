@@ -6,7 +6,6 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Watertight.Renderer
 {
-    [BindClass("Renderer", "GL11BatchVertexRenderer")]
     class GL11BatchVertexRenderer : BatchVertexRenderer
     {
         int displayList = 0;

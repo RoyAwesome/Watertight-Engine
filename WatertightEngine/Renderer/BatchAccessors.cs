@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using OpenTK;
 
 namespace Watertight.Renderer
@@ -23,7 +24,7 @@ namespace Watertight.Renderer
         }
         public void AddVertex(float x, float y)
         {
-            AddVertex(x, y, 0.0f, 1.0f);
+            AddVertex(x, y, 0, 1.0f);
         }
 
         public void AddColor(float r, float g, float b)
@@ -37,6 +38,11 @@ namespace Watertight.Renderer
             colorBuffer.Add(g);
             colorBuffer.Add(b);
             colorBuffer.Add(a);
+        }
+
+        public void AddColor(Color c)
+        {
+            this.AddColor(c.R / 255.0f, c.G / 255.0f, c.B / 255.0f, c.A / 255.0f);
         }
 
         public void AddNormal(float x, float y, float z, float w)

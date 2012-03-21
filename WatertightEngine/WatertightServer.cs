@@ -18,7 +18,7 @@ namespace Watertight
         int rate;
 
 
-       List<NetworkedTask> networkTasks = new List<NetworkedTask>();
+        List<NetworkedTask> networkTasks = new List<NetworkedTask>();
 
       
         public void Start(int rate)
@@ -62,7 +62,18 @@ namespace Watertight
                             Console.WriteLine(message.ReadString());
                             break;
 
+                        case NetIncomingMessageType.StatusChanged:
+                            NetConnectionStatus status = (NetConnectionStatus)message.ReadByte();
+                            if (status == NetConnectionStatus.Connected)
+                            {
+                                //
+                                // A new player just connected!
+                                //
+                                Console.WriteLine(NetUtility.ToHexString(message.SenderConnection.RemoteUniqueIdentifier) + " connected!");
 
+                               
+                            }
+                            break;
                         case NetIncomingMessageType.Data:
                             byte id = message.PeekByte();
                             Packet p = PacketManager.GetPacket(id);
