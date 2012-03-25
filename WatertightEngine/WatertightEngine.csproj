@@ -164,6 +164,16 @@
     <Compile Include="Renderer\GL11BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
+    <Compile Include="Renderer\Shaders\Shader.cs" />
+    <Compile Include="Renderer\Shaders\ShaderHelper.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\AttributeShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\FloatShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\IntShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\MatrixShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\ShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\Vector2ShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\Vector3ShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\Vector4ShaderVariable.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Simulation\Entity.cs" />
     <Compile Include="Simulation\EntityController.cs" />
