@@ -27,6 +27,19 @@ namespace Watertight.Renderer
             AddVertex(x, y, 0, 1.0f);
         }
 
+        public void AddVertex(Vector2 vertex)
+        {
+            AddVertex(vertex.X, vertex.Y);
+        }
+        public void AddVertex(Vector3 vertex)
+        {
+            AddVertex(vertex.X, vertex.Y, vertex.Z);
+        }
+        public void AddVertex(Vector4 vertex)
+        {
+            AddVertex(vertex.X, vertex.Y, vertex.Z, vertex.W);
+        }
+
         public void AddColor(float r, float g, float b)
         {
             AddColor(r, g, b, 1.0f);
@@ -60,11 +73,11 @@ namespace Watertight.Renderer
 
         public void AddNormal(Vector3 vertex)
         {
-            AddVertex(vertex.X, vertex.Y, vertex.Z);
+            AddNormal(vertex.X, vertex.Y, vertex.Z);
         }
         public void AddNormal(Vector4 vertex)
         {
-            AddVertex(vertex.X, vertex.Y, vertex.Z, vertex.W);
+            AddNormal(vertex.X, vertex.Y, vertex.Z, vertex.W);
         }
 
         public void AddTexCoord(float u, float v)
@@ -72,6 +85,10 @@ namespace Watertight.Renderer
             if (!useTexture) useTexture = true;
             uvBuffer.Add(u);
             uvBuffer.Add(v);
+        }
+        public void AddTexCoord(Vector2 uv)
+        {
+            AddTexCoord(uv.X, uv.Y);
         }
 
     }

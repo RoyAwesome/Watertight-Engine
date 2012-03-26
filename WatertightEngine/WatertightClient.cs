@@ -61,6 +61,17 @@ namespace Watertight
 
             client.Connect("localhost", port, connectMessage);
 
+
+            //Drawing a simple triangle
+            /*
+             * renderer.AddColor(Color.Red);
+             * renderer.AddVertex(0,0);
+             * renderer.AddColor(Color.Blue);
+             * renderer.AddVertex(-1, 1);
+             * renderer.AddColor(Color.Green);
+             * renderer.AddVertex(1, 1); 
+             * 
+             */
             
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
