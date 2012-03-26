@@ -9,6 +9,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Watertight.Mods;
 using Watertight.Renderer;
+using Watertight.Renderer.Shaders;
 using Watertight.Networking;
 using Lidgren.Network;
 
@@ -35,7 +36,11 @@ namespace Watertight
 
             this.rate = rate;
            
-            BatchVertexRenderer renderer = new GL11BatchVertexRenderer();
+            BatchVertexRenderer renderer = new GL30BatchVertexRenderer();
+            Shader s = new Shader("basicShader.vert", "basicShader.frag");
+            renderer.ActiveShader = s;
+            renderer.ActiveShader["Proj"] = Matrix4.Identity;
+            renderer.ActiveShader["View"] = Matrix4.Identity;
 
             window.KeyPress += new EventHandler<KeyPressEventArgs>(window_KeyPress);
 

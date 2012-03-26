@@ -41,9 +41,11 @@ namespace Watertight
             config.Port = 2861;
             config.UseMessageRecycling = true;
 
-
             NetServer server = new NetServer(config);
+            
             server.Start();
+
+            PacketManager.GetPacket(0);
 
             while (true)
             {
@@ -71,17 +73,18 @@ namespace Watertight
                                 //
                                 Console.WriteLine(NetUtility.ToHexString(message.SenderConnection.RemoteUniqueIdentifier) + " connected!");
 
+                                Packet p = PacketManager.HandleMessage(message.SenderConnection.RemoteHailMessage);
+                                GameConsole.ConsoleMessage("Username: " + (p as ConnectPacket).Name);
                                
+                            }
+                            if (status == NetConnectionStatus.Disconnected)
+                            {
+                                GameConsole.ConsoleMessage(NetUtility.ToHexString(message.SenderConnection.RemoteUniqueIdentifier) + " connected!");
                             }
                             break;
                         case NetIncomingMessageType.Data:
-                            byte id = message.PeekByte();
-                            Packet p = PacketManager.GetPacket(id);
-                            if (p != null)
-                            {
-                                p.Decode(message);
-
-                            }
+                            GameConsole.ConsoleMessage("Got a data message");
+                            
                             break;
                     }
                 }

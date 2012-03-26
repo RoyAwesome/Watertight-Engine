@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using Lidgren.Network;
 
 namespace Watertight.Networking
 {
@@ -13,27 +14,43 @@ namespace Watertight.Networking
 
         static PacketManager()
         {
-            Assembly asm = Assembly.GetEntryAssembly();
+            Assembly asm = Assembly.GetCallingAssembly();
             foreach (Type t in asm.GetTypes())
             {
-                foreach (Attribute attrib in t.GetCustomAttributes(false))
+                if(t.IsAssignableFrom(typeof(Packet)))
                 {
-                    if (attrib is PacketType)
-                    {
-                        PacketType packetdef = attrib as PacketType;
-                        packetTable[packetdef.ID] = t;
-                    }
+                    Console.WriteLine("Got a packet " + t);
+                     foreach (Attribute attrib in t.GetCustomAttributes(typeof(PacketType), false))
+                     {
+                         Console.WriteLine("Assigning Packet: " + attrib);
+                         PacketType type = attrib as PacketType;
+                         packetTable[type.ID] = t;
+                     }
+                }
+                /*
                     if (attrib is HandlerType)
                     {
                         HandlerType handler = attrib as HandlerType;
                         packetHandlers[handler.PacketType] = t.GetConstructor(Type.EmptyTypes).Invoke(null);
                     }
                 }
-
+                */
             }
 
 
         }
+
+        public static Packet HandleMessage(NetIncomingMessage msg)
+        {
+            byte header = msg.PeekByte();
+            Console.WriteLine(header);
+            Packet p = GetPacket(msg.PeekByte());
+
+            p.Decode(msg);
+
+            return p;
+        }
+
 
         public static Packet GetPacket(byte id)
         {
@@ -47,17 +64,6 @@ namespace Watertight.Networking
             return p;
         }
 
-        public static void HandlePacket(Packet p)
-        {
-            if(!packetHandlers.ContainsKey(p.GetType())) 
-            {
-                GameConsole.ConsoleMessage("Warning: Got Packet " + p.ID + " but can't handle it!");
-                return;
-            }
-            PacketHandler handler = packetHandlers[p.GetType()] as PacketHandler; 
-            handler.HandlePacket(p);
-
-        }
 
     }
 }

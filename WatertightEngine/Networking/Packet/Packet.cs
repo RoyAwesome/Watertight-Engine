@@ -27,6 +27,13 @@ namespace Watertight.Networking
     {
         byte packetID = 0;
 
+        public Packet()
+        {
+            object[] attribs = this.GetType().GetCustomAttributes(typeof(PacketType), true);
+            if (attribs.Length <= 0) throw new Exception("Packet constructed without a PacketType attribute!");
+            this.ID = (attribs[0] as PacketType).ID;
+        }
+
         public byte ID
         {
             get { return packetID; }
@@ -39,6 +46,7 @@ namespace Watertight.Networking
         public void Encode(ref NetOutgoingMessage message)
         {
             message.Write(ID);
+            Console.WriteLine("Wrote packet: " + this.GetType() + " ID:  " + ID);
             WritePacket(ref message);
 
         }

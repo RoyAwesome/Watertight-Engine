@@ -7,5 +7,8 @@ namespace Watertight.Networking
 {
     class Session
     {
+
+
+
     }
 }
