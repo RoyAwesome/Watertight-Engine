@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Watertight.Filesystem
 {
-    abstract class Resource 
+    public abstract class Resource 
     {
         Uri path;
         public Uri Path

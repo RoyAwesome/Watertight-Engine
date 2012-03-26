@@ -173,9 +173,11 @@
     <Compile Include="Renderer\Shaders\ShaderVariables\IntShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\MatrixShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\ShaderVariable.cs" />
+    <Compile Include="Renderer\Shaders\ShaderVariables\TextureShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector2ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector3ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector4ShaderVariable.cs" />
+    <Compile Include="Resources\Texture.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Simulation\Entity.cs" />
     <Compile Include="Simulation\EntityController.cs" />

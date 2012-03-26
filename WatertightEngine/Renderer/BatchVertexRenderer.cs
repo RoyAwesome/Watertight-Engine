@@ -47,6 +47,8 @@ namespace Watertight.Renderer
             flushed = false;
             vertexBuffer.Clear();
             colorBuffer.Clear();
+            normalBuffer.Clear();
+            uvBuffer.Clear();
 
             numVerticies = 0;
         }

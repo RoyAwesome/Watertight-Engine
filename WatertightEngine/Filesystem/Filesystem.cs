@@ -7,6 +7,7 @@ using Ionic.Zip;
 using Watertight.Mods;
 using Newtonsoft.Json;
 using Watertight.LuaSystem;
+using Watertight.Resources;
 
 namespace Watertight.Filesystem
 {
@@ -26,6 +27,7 @@ namespace Watertight.Filesystem
             factories = new Dictionary<Type, object>();
             factories[typeof(LuaFile)] = new LuaFileFactory();
             factories[typeof(ModDescriptor)] = new DescriptorFactory();
+            factories[typeof(Texture)] = new TextureLoader();
 
             pathOrder = new FileSystemPathFinder[] { new FileSystemSearchPath(CacheDirectory) ,
                                                     new FileSystemSearchPath(ModDirectory),

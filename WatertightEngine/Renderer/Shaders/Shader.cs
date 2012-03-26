@@ -6,6 +6,7 @@ using OpenTK.Graphics.OpenGL;
 using Watertight.Renderer.Shaders.ShaderVariables;
 using OpenTK;
 using System.Dynamic;
+using Watertight.Resources;
 
 namespace Watertight.Renderer.Shaders
 {
@@ -17,7 +18,9 @@ namespace Watertight.Renderer.Shaders
         int[] shaders;
 
         Dictionary<string, ShaderVariable> variables = new Dictionary<string, ShaderVariable>();
+        Dictionary<string, TextureShaderVariable> textures = new Dictionary<string, TextureShaderVariable>();
 
+        int maxTextures = 0;
 
 
         public Shader(string VertexShader, string FragmentShader)
@@ -78,6 +81,9 @@ namespace Watertight.Renderer.Shaders
 
             }
 
+            GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxTextures);
+            GameConsole.ConsoleMessage("Max TExtures: " + maxTextures);
+
         }
 
         public dynamic this[string param]
@@ -91,6 +97,7 @@ namespace Watertight.Renderer.Shaders
                 if (t == typeof(Vector2)) SetUniform(param, (Vector2)value);
                 if (t == typeof(Vector4)) SetUniform(param, (Vector4)value);
                 if (t == typeof(Matrix4)) SetUniform(param, (Matrix4)value);
+                if (t == typeof(Texture)) SetUniform(param, (Texture)value);
             }
 
         }
@@ -143,10 +150,17 @@ namespace Watertight.Renderer.Shaders
             variables[name] = new Vector4ShaderVariable(this.program, name, value);
         }
 
+        public void SetUniform(string name, Texture texture)
+        {
+            textures[name] = new TextureShaderVariable(this.program, name, texture.TextureID);
+        }
+
         public void EnableAttribute(string name, int size, VertexAttribPointerType type, int stride, int offset)
         {
             variables[name] = new AttributeShaderVariable(this.program, name, size, type, stride, offset);
         }
+
+        
         #endregion
 
 
@@ -156,6 +170,16 @@ namespace Watertight.Renderer.Shaders
             foreach (ShaderVariable var in variables.Values)
             {
                 var.Assign();
+            }
+            int i = 0;
+            foreach (TextureShaderVariable tex in textures.Values)
+            {
+                tex.Bind(i);
+                i++;
+                if (i >= maxTextures)
+                {
+                    throw new Exception("Bound more textures than you can support! ");
+                }
             }
         }
 

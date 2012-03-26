@@ -51,7 +51,6 @@ namespace Watertight
             config.Port = port + 1;
             config.UseMessageRecycling = true;
 
-
             NetClient client = new NetClient(config);
             client.Start();
 
@@ -63,15 +62,7 @@ namespace Watertight
 
 
             //Drawing a simple triangle
-            /*
-             * renderer.AddColor(Color.Red);
-             * renderer.AddVertex(0,0);
-             * renderer.AddColor(Color.Blue);
-             * renderer.AddVertex(-1, 1);
-             * renderer.AddColor(Color.Green);
-             * renderer.AddVertex(1, 1); 
-             * 
-             */
+         
             
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
@@ -83,7 +74,7 @@ namespace Watertight
                 window.ProcessEvents();
                 GL.Clear(ClearBufferMask.ColorBufferBit);
                 GL.ClearColor(0, 0, 0, 1);
-
+                
                 foreach (Mod m in ModManager.Mods())
                 {
                     m.OnTick(dt);
@@ -99,7 +90,7 @@ namespace Watertight
 
 
                 renderer.Draw();
-
+                
 
                 window.Context.SwapBuffers();
                 watch.Stop();
@@ -116,7 +107,7 @@ namespace Watertight
             }
 
         }
-
+        
 
         void window_KeyPress(object sender, KeyPressEventArgs e)
         {
