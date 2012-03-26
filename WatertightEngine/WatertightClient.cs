@@ -36,8 +36,8 @@ namespace Watertight
 
             this.rate = rate;
            
-            BatchVertexRenderer renderer = new GL30BatchVertexRenderer();
-            Shader s = new Shader("basicShader.vert", "basicShader.frag");
+            BatchVertexRenderer renderer = new GL20BatchVertexRenderer();
+            Shader s = new Shader("basic20.vert", "basic20.frag");
             renderer.ActiveShader = s;
             renderer.ActiveShader["Proj"] = Matrix4.Identity;
             renderer.ActiveShader["View"] = Matrix4.Identity;
@@ -61,7 +61,7 @@ namespace Watertight
 
             client.Connect("localhost", port, connectMessage);
 
-           
+            
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
             while (window.Exists)

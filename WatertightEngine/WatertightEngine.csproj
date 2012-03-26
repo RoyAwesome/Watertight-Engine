@@ -163,6 +163,7 @@
     <Compile Include="Renderer\BatchAccessors.cs" />
     <Compile Include="Renderer\BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL11BatchVertexRenderer.cs" />
+    <Compile Include="Renderer\GL20BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
     <Compile Include="Renderer\Shaders\Shader.cs" />
@@ -209,10 +210,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="basicShader.frag">
+    <None Include="basic20.frag">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="basicShader.vert">
+    <None Include="basic20.vert">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="basic30.frag">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="basic30.vert">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
