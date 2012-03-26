@@ -21,7 +21,7 @@ namespace Watertight.Resources
     }
 
 
-    public class Texture : Resource
+    public class Texture : Resource, IDisposable
     {
         Bitmap image;
 
@@ -31,6 +31,7 @@ namespace Watertight.Resources
 
         public Texture(Bitmap data)
         {
+            this.image = data;
             textureID = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, textureID);
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)TextureEnvMode.Modulate);
@@ -43,10 +44,29 @@ namespace Watertight.Resources
             data.UnlockBits(bitmapdata);
         }
 
+        
 
         public void Bind()
         {
             GL.BindTexture(TextureTarget.Texture2D, textureID);
+        }
+
+
+        public ~Texture()
+        {
+            Destroy();
+        }
+
+
+        public void Dispose()
+        {
+            Destroy();
+            GC.SuppressFinalize(this);
+        }
+        
+        public void Destroy()
+        {
+            GL.DeleteTexture(textureID);
         }
     }
 

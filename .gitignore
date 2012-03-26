@@ -44,3 +44,4 @@ WatertightEngine/bin
 WatertightEngine/obj
 *.suo
 *.user
+_ReSharper.WatertightEngine/*
