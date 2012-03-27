@@ -9,6 +9,10 @@ namespace Watertight.Resources
 {
     class Shader : BaseShader, Resource
     {
+
+
+
+
         public Uri Path
         {
             get;

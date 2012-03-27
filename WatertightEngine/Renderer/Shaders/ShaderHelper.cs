@@ -11,13 +11,26 @@ namespace Watertight.Renderer.Shaders
     {
         public static int CompileShader(string file, ShaderType type)
         {
-            string source = "";
-            using( FileStream shader = File.Open(file, FileMode.Open))
-            using (TextReader reader = new StreamReader(shader))
+            int s = -1;
+
+            using (FileStream stream = File.Open(file, FileMode.Open))
             {
-                source = reader.ReadToEnd();   
+                s = CompileShader(stream, type);
             }
 
+            return s;
+        }
+
+
+        public static int CompileShader(FileStream stream, ShaderType type)
+        {
+            string source = "";
+
+            using (TextReader reader = new StreamReader(stream))
+            {
+                source = reader.ReadToEnd();
+            }
+           
             int s = GL.CreateShader(type);
             GL.ShaderSource(s, source);
             GL.CompileShader(s);
@@ -30,11 +43,9 @@ namespace Watertight.Renderer.Shaders
                 GL.DeleteShader(s);
                 s = -1;
             }
-            
+
             return s;
         }
-
-
 
 
     }

@@ -15,25 +15,41 @@ namespace Watertight.Renderer.Shaders
         const bool validate = true;
 
         int program = -1;
-        int[] shaders;
-
         Dictionary<string, ShaderVariable> variables = new Dictionary<string, ShaderVariable>();
         Dictionary<string, TextureShaderVariable> textures = new Dictionary<string, TextureShaderVariable>();
 
         int maxTextures = 0;
 
 
+        public BaseShader(int[] shaders)
+        {
+            Compile(shaders);
+
+        }
+
         public BaseShader(string VertexShader, string FragmentShader)
         {
 
-            program = GL.CreateProgram();
+            
 
             int vshader = ShaderHelper.CompileShader(VertexShader, ShaderType.VertexShader);
             int fshader = ShaderHelper.CompileShader(FragmentShader, ShaderType.FragmentShader);
-            shaders = new int[] { vshader, fshader };
-            GL.AttachShader(program, vshader);
-            GL.AttachShader(program, fshader);
+            int[] shaders = new int[] { vshader, fshader };
 
+            Compile(shaders);
+
+        }
+
+        protected void Compile(int[] shaders)
+        {
+            program = GL.CreateProgram();
+
+            foreach (int s in shaders)
+            {
+                GL.AttachShader(program, s);
+            }
+            
+         
             GL.LinkProgram(program);
 
 
@@ -44,8 +60,10 @@ namespace Watertight.Renderer.Shaders
             {
                 string error = GL.GetProgramInfoLog(program);
                 Console.WriteLine("Error linking shader: \n " + error);
-                GL.DeleteShader(vshader);
-                GL.DeleteShader(fshader);
+                foreach (int s in shaders)
+                {
+                    GL.DeleteShader(s);
+                }
                 GL.DeleteProgram(program);
                 program = -1;
             }
@@ -62,11 +80,11 @@ namespace Watertight.Renderer.Shaders
                 Console.WriteLine("Attached Shaders: " + status);
                 GL.GetProgram(program, ProgramParameter.ActiveAttributes, out status);
                 Console.WriteLine("Active Attributes: " + status);
-                for(int i = 0; i < status; i++)
+                for (int i = 0; i < status; i++)
                 {
                     int size = 0;
                     ActiveAttribType type = ActiveAttribType.Float;
-                    Console.WriteLine("\t" + GL.GetActiveAttrib(program, i, out size, out type) + " " + size + " " + type); 
+                    Console.WriteLine("\t" + GL.GetActiveAttrib(program, i, out size, out type) + " " + size + " " + type);
                 }
 
                 GL.GetProgram(program, ProgramParameter.ActiveUniforms, out status);
@@ -83,7 +101,6 @@ namespace Watertight.Renderer.Shaders
 
             GL.GetInteger(GetPName.MaxCombinedTextureImageUnits, out maxTextures);
             GameConsole.ConsoleMessage("Max TExtures: " + maxTextures);
-
         }
 
         public dynamic this[string param]
