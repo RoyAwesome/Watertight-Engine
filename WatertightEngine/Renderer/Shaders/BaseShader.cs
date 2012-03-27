@@ -10,7 +10,7 @@ using Watertight.Resources;
 
 namespace Watertight.Renderer.Shaders
 {
-    public class Shader : IDisposable
+    public class BaseShader : IDisposable
     {
         const bool validate = true;
 
@@ -23,7 +23,7 @@ namespace Watertight.Renderer.Shaders
         int maxTextures = 0;
 
 
-        public Shader(string VertexShader, string FragmentShader)
+        public BaseShader(string VertexShader, string FragmentShader)
         {
 
             program = GL.CreateProgram();
@@ -103,7 +103,7 @@ namespace Watertight.Renderer.Shaders
         }
 
         #region Destructor
-        ~Shader()
+        ~BaseShader()
         {
             DeleteShaders();
         }

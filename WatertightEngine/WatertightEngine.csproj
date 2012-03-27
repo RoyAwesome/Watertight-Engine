@@ -166,7 +166,7 @@
     <Compile Include="Renderer\GL20BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
-    <Compile Include="Renderer\Shaders\Shader.cs" />
+    <Compile Include="Renderer\Shaders\BaseShader.cs" />
     <Compile Include="Renderer\Shaders\ShaderHelper.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\AttributeShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\FloatShaderVariable.cs" />
@@ -177,6 +177,7 @@
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector2ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector3ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector4ShaderVariable.cs" />
+    <Compile Include="Resources\Shader.cs" />
     <Compile Include="Resources\Texture.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Simulation\Entity.cs" />

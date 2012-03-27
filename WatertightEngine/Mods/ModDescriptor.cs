@@ -53,5 +53,12 @@ namespace Watertight.Mods
                 " ClientMain = " + clientMain;
         }
 
+
+        public Uri Path
+        {
+            get;          
+            set;
+           
+        }
     }
 }

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.IO;
+using Watertight.Renderer.Shaders;
+using Watertight.Filesystem;
 
-namespace Watertight.Filesystem
+namespace Watertight.Resources
 {
-    public interface Resource 
+    class Shader : BaseShader, Resource
     {
-        Uri Path
+        public Uri Path
         {
             get;
             set;
         }
-
     }
 }

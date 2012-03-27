@@ -37,7 +37,7 @@ namespace Watertight
             this.rate = rate;
            
             BatchVertexRenderer renderer = new GL20BatchVertexRenderer();
-            Shader s = new Shader("basic20.vert", "basic20.frag");
+            BaseShader s = new BaseShader("basic20.vert", "basic20.frag");
             renderer.ActiveShader = s;
             renderer.ActiveShader["Proj"] = Matrix4.Identity;
             renderer.ActiveShader["View"] = Matrix4.Identity;

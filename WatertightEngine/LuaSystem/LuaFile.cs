@@ -29,5 +29,11 @@ namespace Watertight.LuaSystem
             }
         }
 
+
+        public Uri Path
+        {
+            get;           
+            set;         
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace Watertight.Resources
         }
 
 
-        public ~Texture()
+        ~Texture()
         {
             Destroy();
         }
@@ -67,6 +67,12 @@ namespace Watertight.Resources
         public void Destroy()
         {
             GL.DeleteTexture(textureID);
+        }
+
+        public Uri Path
+        {
+            get;           
+            set;           
         }
     }
 
