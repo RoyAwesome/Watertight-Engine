@@ -145,7 +145,6 @@
     <Compile Include="Filesystem\Filesystem.cs" />
     <Compile Include="LuaSystem\Hookable.cs" />
     <Compile Include="LuaSystem\LuaFile.cs" />
-    <Compile Include="Filesystem\Resource.cs" />
     <Compile Include="LuaSystem\LuaHelper.cs" />
     <Compile Include="Mods\Mod.cs" />
     <Compile Include="Mods\ModDescriptor.cs" />
@@ -177,6 +176,7 @@
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector2ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector3ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector4ShaderVariable.cs" />
+    <Compile Include="Resources\EffectFile.cs" />
     <Compile Include="Resources\Shader.cs" />
     <Compile Include="Resources\Texture.cs" />
     <Compile Include="Server.cs" />

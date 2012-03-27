@@ -28,6 +28,7 @@ namespace Watertight.Filesystem
             factories[typeof(LuaFile)] = new LuaFileFactory();
             factories[typeof(ModDescriptor)] = new DescriptorFactory();
             factories[typeof(Texture)] = new TextureLoader();
+            factories[typeof(Shader)] = new ShaderLoader();
 
             pathOrder = new FileSystemPathFinder[] { new FileSystemSearchPath(CacheDirectory) ,
                                                     new FileSystemSearchPath(ModDirectory),
@@ -49,7 +50,8 @@ namespace Watertight.Filesystem
 
         public static E LoadResource<E>(Uri path) where E : Resource
         {
-            E r = LoadResource<E>(GetFileStream(path));
+
+            E r = (factories[typeof(E)] as ResourceFactory<E>).getResource(path);
             r.Path = path;
             return r;
         }

@@ -11,6 +11,16 @@ using Newtonsoft.Json;
 namespace Watertight.Filesystem
 {
 
+    public interface Resource
+    {
+        Uri Path
+        {
+            get;
+            set;
+        }
+
+    }
+
     abstract class ResourceFactory<E> where E : Resource
     {
         public abstract E getResource(StreamReader stream);

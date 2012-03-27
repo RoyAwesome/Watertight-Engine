@@ -8,6 +8,7 @@ using OpenTK;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using System.Threading;
+using Watertight.Resources;
 namespace Watertight
 {
     class Program
@@ -16,8 +17,7 @@ namespace Watertight
         static void Main(string[] args)
         {
 
-
-            
+           
             if (!Directory.Exists("bin/")) Directory.CreateDirectory("bin/");
             AppDomain.CurrentDomain.AppendPrivatePath("bin/");
 #if CLIENT

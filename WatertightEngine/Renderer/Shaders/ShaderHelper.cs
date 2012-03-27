@@ -22,7 +22,7 @@ namespace Watertight.Renderer.Shaders
         }
 
 
-        public static int CompileShader(FileStream stream, ShaderType type)
+        public static int CompileShader(Stream stream, ShaderType type)
         {
             string source = "";
 

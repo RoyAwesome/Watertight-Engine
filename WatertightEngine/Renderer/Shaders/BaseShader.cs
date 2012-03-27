@@ -20,6 +20,7 @@ namespace Watertight.Renderer.Shaders
 
         int maxTextures = 0;
 
+        int[] shaders;
 
         public BaseShader(int[] shaders)
         {
@@ -42,6 +43,7 @@ namespace Watertight.Renderer.Shaders
 
         protected void Compile(int[] shaders)
         {
+            this.shaders = shaders;
             program = GL.CreateProgram();
 
             foreach (int s in shaders)

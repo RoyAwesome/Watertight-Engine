@@ -12,6 +12,7 @@ using Watertight.Renderer;
 using Watertight.Renderer.Shaders;
 using Watertight.Networking;
 using Lidgren.Network;
+using Watertight.Resources;
 
 namespace Watertight
 {
@@ -35,7 +36,9 @@ namespace Watertight
             window.Visible = true;
 
             this.rate = rate;
-           
+            Uri shader = new Uri("shader://FileSystemMod/effects/basic30.effect");
+            Shader sh = Filesystem.FileSystem.LoadResource<Shader>(shader);
+
             BatchVertexRenderer renderer = new GL20BatchVertexRenderer();
             BaseShader s = new BaseShader("basic20.vert", "basic20.frag");
             renderer.ActiveShader = s;
