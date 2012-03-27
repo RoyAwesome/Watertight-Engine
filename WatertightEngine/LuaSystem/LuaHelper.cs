@@ -5,6 +5,7 @@ using System.Text;
 using LuaInterface;
 using System.Reflection;
 using System.IO;
+using OpenTK;
 
 namespace Watertight
 {
@@ -38,8 +39,11 @@ namespace Watertight
                 LuaVM.DoString("SERVER = false;");
             }
 
-
-
+            LuaHelper.LuaVM.DoString("luanet.load_assembly(\"OpenTK\")");
+            LuaVM.DoString("Math = {}");
+            LuaVM.DoString("Math.Matrix4 = luanet.import_type('" + typeof(Matrix4).FullName + "')");
+            LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector3).FullName + "')");
+            LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector2).FullName + "')");
         }
 
         private static void EnableSandbox()

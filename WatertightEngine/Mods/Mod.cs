@@ -42,6 +42,16 @@ namespace Watertight.Mods
             CallHook("OnRender", dt, renderer);
         }
 
+        public void PreRender(BatchVertexRenderer renderer)
+        {
+            CallHook("PreRender", renderer);
+        }
+
+
+        public void ResourceLoad()
+        {
+            CallHook("ResourceLoad");
+        }
 
         public string GetFile()
         {

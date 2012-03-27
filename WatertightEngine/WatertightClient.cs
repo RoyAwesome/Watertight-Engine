@@ -37,14 +37,12 @@ namespace Watertight
 
             this.rate = rate;
             Uri shader = new Uri("shader://FileSystemMod/effects/basic30.effect");
-            Shader sh = Filesystem.FileSystem.LoadResource<Shader>(shader);
-
-            BatchVertexRenderer renderer = new GL20BatchVertexRenderer();
-            BaseShader s = new BaseShader("basic20.vert", "basic20.frag");
-            renderer.ActiveShader = s;
+            BatchVertexRenderer renderer = new GL30BatchVertexRenderer();
+            /*
+            renderer.ActiveShader = sh;
             renderer.ActiveShader["Proj"] = Matrix4.Identity;
             renderer.ActiveShader["View"] = Matrix4.Identity;
-
+            */
             window.KeyPress += new EventHandler<KeyPressEventArgs>(window_KeyPress);
 
             int port = 2861;
@@ -65,11 +63,19 @@ namespace Watertight
 
 
             //Drawing a simple triangle
-         
-            
+
+
+
+            foreach (Mod m in ModManager.Mods())
+            {
+                m.ResourceLoad();
+            }
+
+
+
             int rateInMillies = (int)((1f / rate) * 1000);
             float dt = 0;
-            while (window.Exists)
+            while (true)
             {
                 
                 Stopwatch watch = new Stopwatch();
@@ -77,10 +83,17 @@ namespace Watertight
                 window.ProcessEvents();
                 GL.Clear(ClearBufferMask.ColorBufferBit);
                 GL.ClearColor(0, 0, 0, 1);
-                
+
+               
                 foreach (Mod m in ModManager.Mods())
                 {
                     m.OnTick(dt);
+                }
+
+
+                foreach (Mod m in ModManager.Mods())
+                {
+                    m.PreRender(renderer);
                 }
 
                 renderer.Begin();

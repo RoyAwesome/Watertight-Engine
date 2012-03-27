@@ -48,6 +48,12 @@ namespace Watertight.Filesystem
             throw new ArgumentException("Cannot find file: " + path.ToString() + " In any search path!");
         }
 
+        [BindFunction("FS", "LoadShader")]
+        public static Shader LoadShader(string path) 
+        {
+            return LoadResource<Shader>(new Uri(path));
+        }
+
         public static E LoadResource<E>(Uri path) where E : Resource
         {
 

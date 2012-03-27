@@ -1,10 +1,11 @@
 m = GetMod("FileSystemMod");
 
 
-
+local shader = nil;
 
 function OnInit()
   print("Mod is " .. m:GetName());
+  print("Is this working at all?");
   render1 = 0
   render2 = 0
   render3 = 0
@@ -12,16 +13,36 @@ function OnInit()
   render1Forward = false
   render2Forward = false
   render3Forward = false
+  
+ 
+  
 end
 m:RegisterHook("Init", OnInit);
 
+
+function ResourceLoad()
+  shader = FS.LoadShader("shader://FileSystemMod/effects/basic30.effect" );
+  
+end
+m:RegisterHook("ResourceLoad", ResourceLoad);
 
 function OnTick(dt)
   
 end
 m:RegisterHook("OnTick", OnTick);
 
+
+function PreRender(renderer)
+	renderer.ActiveShader = shader;
+	renderer.ActiveShader["Proj"] = Math.Matrix4.Identity;
+	renderer.ActiveShader["View"] = Math.Matrix4.Identity;
+
+end
+m:RegisterHook("PreRender", PreRender);
+
 function OnRender(dt, renderer)
+  
+
   if (render1Forward) then
     render1 = render1 + 1
     render1Forward = render1 < 255
