@@ -1,5 +1,4 @@
-
---remove access to LuaInterface
+﻿--remove access to LuaInterface
 luanet = nil;
 package.loaded.luanet = nil;
 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LuaInterface;
+using NLua;
+using NLua.Exceptions;
 
 namespace Watertight.LuaSystem
 {

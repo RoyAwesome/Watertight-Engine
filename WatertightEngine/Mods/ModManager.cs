@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Watertight.Filesystem;
 using System.IO;
-using LuaInterface;
+using NLua;
 using Watertight.LuaSystem;
 using Ionic.Zip;
 
@@ -53,14 +53,36 @@ namespace Watertight.Mods
                 authors = new string[(mod["Author"] as LuaTable).Values.Count];
                 (mod["Author"] as LuaTable).Values.CopyTo(authors, 0);
             }
-            else
+            else if (mod["Author"] is string)
             {
                 authors = new string[] { (string)mod["Author"] };
             }
+            else
+            {
+                authors = new string[] { "No Author Provided" };
+            }
             d.Author = authors;
+
             d.Version = (string)((string)mod["Version"]).Clone();
             d.ServerMain = (string)((string)mod["ServerMain"]).Clone();
             d.ClientMain = (string)((string)mod["ClientMain"]).Clone();
+
+            string[] includes;
+            if (mod["IncludeFiles"] is LuaTable)
+            {
+                var id = mod["IncludeFiles"] as LuaTable;
+                includes = new string[id.Values.Count];
+                id.Values.CopyTo(includes, 0);
+            }
+            else if (mod["IncludeFiles"] is string)
+            {
+                includes = new string[] { (string)mod["IncludeFiles"] };
+            }
+            else
+            {
+                includes = new string[] { };
+            }
+            d.IncludeFiles = includes;
             
             return d;
         }
@@ -76,18 +98,32 @@ namespace Watertight.Mods
 
         public static void EnableMod(Mod mod)
         {
+            //Find the entry point to the mod
             Uri entry;
             if(Watertight.GetGame().GetPlatform() == Platform.Server)
                 entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ServerMain);
             else
                 entry = new Uri("script://" + mod.GetName() + "/" + mod.Descriptor.ClientMain);
-
+            //Run the entry point
             LuaFile entrypoint = FileSystem.LoadResource<LuaFile>(entry);
             entrypoint.DoFile(LuaHelper.LuaVM);
+            
+
+            //Run all of the included scripts
+            foreach(string include in mod.Descriptor.IncludeFiles)
+            {
+                Util.Msg("Including: " + include);
+                Uri uri = new Uri(include);
+
+                LuaFile includeFile = FileSystem.LoadResource<LuaFile>(uri);
+
+                includeFile.DoFile(LuaHelper.LuaVM);
+            }
+
+
+
             Console.WriteLine("Loaded mod: " + mod.Descriptor.Name + " Version: " + mod.Descriptor.Version);
-
             mod.Init();
-
         
         }
       
@@ -121,6 +157,8 @@ namespace Watertight.Mods
                    using (StreamReader r = new StreamReader(dir + "/mod.lua"))
                    {
                        LuaFile f = FileSystem.LoadResource<LuaFile>(r);
+                       string modname = Path.GetFileName(dir);
+                       f.Path = new Uri("script://" + modname  + "/mod.lua");
                        f.DoFile(LuaHelper.LuaVM);
                    }
                }

@@ -57,8 +57,13 @@ namespace Watertight.Mods
         public Uri Path
         {
             get;          
+            set;           
+        }
+
+        public string[] IncludeFiles
+        {
+            get;
             set;
-           
         }
     }
 }

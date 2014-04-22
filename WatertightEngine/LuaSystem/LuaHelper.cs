@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LuaInterface;
+using NLua;
 using System.Reflection;
 using System.IO;
 using OpenTK;
+using NLua.Exceptions;
 
 namespace Watertight
 {
@@ -21,9 +22,9 @@ namespace Watertight
         {
             vm = lstate;
             RegisterLuaFunctions();
-            BindClasses();
-            EnableSandbox();
+            BindClasses();            
             PushGlobals();
+            IncludeLuascripts();
         }
 
         private static void PushGlobals()
@@ -45,18 +46,16 @@ namespace Watertight
             LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector3).FullName + "')");
             LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector2).FullName + "')");
         }
-
-        private static void EnableSandbox()
+        
+        private static void IncludeLuascripts()
         {
-            if (File.Exists("sandbox.lua"))
-                LuaVM.DoFile("sandbox.lua");
-            else
+            foreach(string file in Directory.GetFiles("LuaInclude/"))
             {
-                Console.WriteLine("----------WARNING--------");
-                Console.WriteLine(">Sanbox file not found, this makes running mods dangerous");
-                Console.WriteLine(">Find the sandbox.lua file and fix it!");
-
+                Util.Msg("Including: " + Path.GetFileName(file));
+                DoFile(file);
+                             
             }
+
         }
 
         private static void RegisterLuaFunctions()
@@ -77,8 +76,7 @@ namespace Watertight
                         {
                             Console.WriteLine("Registering static function " + functionName);
                             LuaHelper.LuaVM.RegisterFunction(functionName, null, method);
-                        }
-                        
+                        }                        
 
                     }
 
@@ -114,7 +112,17 @@ namespace Watertight
             GameConsole.ConsoleMessage(s.ToString());
         }
 
-
+        public static void DoFile(string file)
+        {
+            try
+            {
+                LuaVM.DoFile(file);
+            }
+            catch(LuaScriptException e)
+            {
+                Util.Msg(e.Message);
+            }
+        }
 
     }
 }

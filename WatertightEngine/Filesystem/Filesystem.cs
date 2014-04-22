@@ -48,11 +48,7 @@ namespace Watertight.Filesystem
             throw new ArgumentException("Cannot find file: " + path.ToString() + " In any search path!");
         }
 
-        [BindFunction("FS", "LoadShader")]
-        public static Shader LoadShader(string path) 
-        {
-            return LoadResource<Shader>(new Uri(path));
-        }
+       
 
         public static E LoadResource<E>(Uri path) where E : Resource
         {
@@ -71,7 +67,22 @@ namespace Watertight.Filesystem
             return ret;
         }
 
+        [BindFunction("FS", "LoadShader")]
+        public static Shader LoadShader(string path)
+        {
+            return LoadResource<Shader>(new Uri(path));
+        }
 
+
+
+        [BindFunction("FS", "GetFilesInDirectory")]
+        public static string[] GetFilesInDirectory(string dir)
+        {
+            //TODO: SECURITY: Check to see if dir is inside the mod's writable dir
+
+            
+            return Directory.GetFiles(dir).Select(x=> Path.GetFileName(x)).ToArray();
+        }
     }
 
 }

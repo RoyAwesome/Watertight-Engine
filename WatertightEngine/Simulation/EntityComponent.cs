@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Watertight.Simulation
 {
-    class EntityController
+    public abstract class EntityComponent
     {
 
 

@@ -40,6 +40,10 @@ namespace Watertight
         /// </summary>
         /// <param name="rate">Ticks per second</param>
         void Start(int rate);
+
+        void Tick(float dt);
+      
+
         /// <summary>
         /// Get the expected Ticks Per Second
         /// </summary>

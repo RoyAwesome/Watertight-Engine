@@ -22,5 +22,11 @@ namespace Watertight
             return types.ToArray();
 
         }
+
+        [BindFunction("_G", "Msg")]
+        public static void Msg(string message)
+        {
+            GameConsole.ConsoleMessage(message);
+        }
     }
 }

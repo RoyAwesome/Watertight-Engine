@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using LuaInterface;
+using NLua;
 using Watertight.Filesystem;
 
 namespace Watertight.LuaSystem
@@ -16,7 +16,7 @@ namespace Watertight.LuaSystem
         {
             try
             {
-                vm.DoString(Lua);
+                vm.DoString(Lua, System.IO.Path.GetFileName(Path.LocalPath));
             }
             catch (Exception e)
             {

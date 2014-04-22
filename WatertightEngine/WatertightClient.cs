@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using LuaInterface;
+using NLua;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Watertight.Mods;
@@ -16,28 +16,22 @@ using Watertight.Resources;
 
 namespace Watertight
 {
-    class WatertightClient : Client
+    class WatertightClient : Engine
     {
         int rate;
+        BatchVertexRenderer renderer;
+        GameWindow window;
 
-      
-        public void Start(int rate)
+        public override void Start(int rate)
         {
-            Watertight.SetGame(this);
+            base.Start(rate);
 
-            LuaHelper.Init(new Lua());
-            ModManager.LoadMods();
-            ModManager.EnableMods();
-
-            GameConsole.Initialize();
-
-
-            GameWindow window = new GameWindow();
+            window = new GameWindow();
             window.Visible = true;
 
-            this.rate = rate;
+          
             Uri shader = new Uri("shader://FileSystemMod/effects/basic30.effect");
-            BatchVertexRenderer renderer = new GL30BatchVertexRenderer();
+            renderer = new GL30BatchVertexRenderer();
             /*
             renderer.ActiveShader = sh;
             renderer.ActiveShader["Proj"] = Matrix4.Identity;
@@ -71,59 +65,43 @@ namespace Watertight
                 m.ResourceLoad();
             }
 
-
-
-            int rateInMillies = (int)((1f / rate) * 1000);
-            float dt = 0;
-            while (true)
-            {
-                
-                Stopwatch watch = new Stopwatch();
-                watch.Start();
-                window.ProcessEvents();
-                GL.Clear(ClearBufferMask.ColorBufferBit);
-                GL.ClearColor(0, 0, 0, 1);
-
-               
-                foreach (Mod m in ModManager.Mods())
-                {
-                    m.OnTick(dt);
-                }
-
-
-                foreach (Mod m in ModManager.Mods())
-                {
-                    m.PreRender(renderer);
-                }
-
-                renderer.Begin();
-
-                foreach (Mod m in ModManager.Mods())
-                {
-                    m.OnRender(dt, renderer);                    
-                }
-                renderer.End();
-
-
-                renderer.Draw();
-                
-
-                window.Context.SwapBuffers();
-                watch.Stop();
-                if (watch.ElapsedMilliseconds < rateInMillies)
-                {
-                    Thread.Sleep(rateInMillies - (int)watch.ElapsedMilliseconds);
-                    dt = 1f / rate;
-                }
-                else
-                {
-                    GameConsole.ConsoleMessage("[WARN] Thread took longer than " + rateInMillies + "ms!");
-                    dt = watch.ElapsedMilliseconds;
-                }
-            }
+            RunGameLoop();
 
         }
-        
+
+        public override void Tick(float dt)
+        {
+            window.ProcessEvents();
+
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.ClearColor(0, 0, 0, 1);
+
+
+            foreach (Mod m in ModManager.Mods())
+            {
+                m.OnTick(dt);
+            }
+
+
+            foreach (Mod m in ModManager.Mods())
+            {
+                m.PreRender(renderer);
+            }
+
+            renderer.Begin();
+
+            foreach (Mod m in ModManager.Mods())
+            {
+                m.OnRender(dt, renderer);
+            }
+            renderer.End();
+
+
+            renderer.Draw();
+
+            window.Context.SwapBuffers();
+
+        }
 
         void window_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -136,41 +114,20 @@ namespace Watertight
         }
 
 
-        public string GetName()
+        public override string GetName()
         {
             return Watertight.ImplName + " Client";
         }
 
-        public string GetVersion()
-        {
-            return Watertight.Version;
-        }
-
-
-        public Platform GetPlatform()
+        public override Platform GetPlatform()
         {
             return Platform.Client;
         }
-
-
-
-
-
-        public void Shutdown()
-        {
-            Environment.Exit(0);
-        }
-
-
-        public int GetRate()
-        {
-            return rate;
-        }
-
 
         public void AddToNetworkProcessQueue(NetworkedTask method)
         {
             throw new NotImplementedException();
         }
+
     }
 }

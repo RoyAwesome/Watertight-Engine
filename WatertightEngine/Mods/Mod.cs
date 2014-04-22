@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using Watertight.Filesystem;
 using Watertight.LuaSystem;
-using LuaInterface;
+using NLua;
 using Watertight.Renderer;
 
 namespace Watertight.Mods
