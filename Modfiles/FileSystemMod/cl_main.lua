@@ -14,7 +14,10 @@ function OnInit()
   render2Forward = false
   render3Forward = false
   
- 
+  ent = Entity()  
+  print("Entity named "..ent.Name)
+  local t = ent:GetTransform()
+  print("transform: "..t.Position:ToString().. " type: "..type(t))
   
 end
 m:RegisterHook("Init", OnInit);
