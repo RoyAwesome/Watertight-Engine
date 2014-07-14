@@ -55,6 +55,7 @@ namespace Watertight
 
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
+                GameConsole.Update(dt);
 
                 Tick(dt);
 

@@ -118,6 +118,9 @@
       <HintPath>..\Dependencies\OpenTK.GLControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="QuickFont">
+      <HintPath>..\Dependencies\QuickFont.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -161,6 +164,9 @@
     <Compile Include="Renderer\GL20BatchVertexRenderer.cs" />
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
+    <Compile Include="Renderer\NewRenderer\IMesh.cs" />
+    <Compile Include="Renderer\NewRenderer\Material.cs" />
+    <Compile Include="Renderer\NewRenderer\Mesh.cs" />
     <Compile Include="Renderer\Shaders\BaseShader.cs" />
     <Compile Include="Renderer\Shaders\ShaderHelper.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\AttributeShaderVariable.cs" />
@@ -175,9 +181,14 @@
     <Compile Include="Resources\EffectFile.cs" />
     <Compile Include="Resources\Shader.cs" />
     <Compile Include="Resources\Texture.cs" />
+    <Compile Include="Simulation\Components\CameraComponent.cs" />
+    <Compile Include="Simulation\Components\RenderComponent.cs" />
     <Compile Include="Simulation\Entity.cs" />
     <Compile Include="Simulation\EntityComponent.cs" />
     <Compile Include="Simulation\EntityComponentDictionary.cs" />
+    <Compile Include="Simulation\LuaComponent.cs" />
+    <Compile Include="Simulation\Components\TransformComponent.cs" />
+    <Compile Include="UI\SimpleUI.cs" />
     <Compile Include="Util\Util.cs" />
     <Compile Include="Watertight.cs" />
     <Compile Include="WatertightClient.cs" />
@@ -185,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
-    <Folder Include="Renderer\NewRenderer\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
@@ -210,7 +220,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LuaInclude\include_util.lua" />
+    <None Include="LuaInclude\dbg.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaInclude\include_util.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="LuaInclude\sandbox.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

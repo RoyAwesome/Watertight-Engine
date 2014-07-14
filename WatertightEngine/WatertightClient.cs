@@ -17,8 +17,7 @@ using Watertight.Resources;
 namespace Watertight
 {
     class WatertightClient : Engine
-    {
-        int rate;
+    {     
         BatchVertexRenderer renderer;
         GameWindow window;
 
@@ -41,7 +40,7 @@ namespace Watertight
 
             int port = 2861;
 
-            GameConsole.ConsoleMessage("Starting Client");
+            Util.Msg("Starting Client");
             NetPeerConfiguration config = new NetPeerConfiguration(Watertight.ImplName + Watertight.Version);
             config.Port = port + 1;
             config.UseMessageRecycling = true;
@@ -56,9 +55,7 @@ namespace Watertight
             client.Connect("localhost", port, connectMessage);
 
 
-            //Drawing a simple triangle
-
-
+            Simulation.LuaComponent lc = Simulation.EntityComponentDictionary.NewComponent("TestLuaComponent");      
 
             foreach (Mod m in ModManager.Mods())
             {

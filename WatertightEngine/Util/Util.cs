@@ -28,5 +28,33 @@ namespace Watertight
         {
             GameConsole.ConsoleMessage(message);
         }
+
+
+        public static NLua.LuaTable GetMetatable(this NLua.LuaTable tab)
+        {
+            var mt = LuaHelper.LuaVM.GetFunction("getmetatable").SafeCall(tab)[0] as NLua.LuaTable;
+            return mt;
+        }
+
+        public static object[] SafeCall(this NLua.LuaFunction func, params object[] param)
+        {
+            try
+            {
+                return func.Call(param);
+            }
+            catch (NLua.Exceptions.LuaScriptException e)
+            {
+                Msg("[Error] " + e.Message);
+                return null;
+            }
+
+        }
+
+        public static object CreateNew(this Type t, params object[] args)
+        {
+            Type[] ConstructorTypes = args.Select(x => x.GetType()).ToArray();
+
+            return t.GetConstructor(ConstructorTypes).Invoke(args);
+        }
     }
 }

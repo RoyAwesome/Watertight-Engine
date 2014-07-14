@@ -7,6 +7,7 @@ using System.Reflection;
 using System.IO;
 using OpenTK;
 using NLua.Exceptions;
+using Watertight.Simulation;
 
 namespace Watertight
 {
@@ -20,6 +21,7 @@ namespace Watertight
 
         public static void Init(Lua lstate)
         {
+            
             vm = lstate;
             RegisterLuaFunctions();
             BindClasses();            
@@ -45,6 +47,9 @@ namespace Watertight
             LuaVM.DoString("Math.Matrix4 = luanet.import_type('" + typeof(Matrix4).FullName + "')");
             LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector3).FullName + "')");
             LuaVM.DoString("Math.Vector3 = luanet.import_type('" + typeof(Vector2).FullName + "')");
+
+            LuaVM.DoString("_R = {}");
+            LuaVM.DoString("_R.Components = {}");
         }
         
         private static void IncludeLuascripts()
@@ -122,6 +127,28 @@ namespace Watertight
             {
                 Util.Msg(e.Message);
             }
+        }
+
+        [BindFunction("_G", "Vec3")]
+        public static Vector3 Vector3()
+        {
+            return new Vector3();
+        }
+        [BindFunction("_G", "Vec2")]
+        public static Vector2 Vector2()
+        {
+            return new Vector2();
+        }
+        [BindFunction("_G", "Quat")]
+        public static Quaternion Quaternion()
+        {
+            return new Quaternion();
+        }
+        
+        [BindFunction("_G", "Entity")]
+        public static Entity Entity()
+        {
+            return new Entity();
         }
 
     }

@@ -30,8 +30,7 @@ namespace Watertight.Filesystem
             factories[typeof(Texture)] = new TextureLoader();
             factories[typeof(Shader)] = new ShaderLoader();
 
-            pathOrder = new FileSystemPathFinder[] { new FileSystemSearchPath(CacheDirectory) ,
-                                                    new FileSystemSearchPath(ModDirectory),
+            pathOrder = new FileSystemPathFinder[] {new FileSystemSearchPath(ModDirectory),
                                                     new ModFileSearchPath() };
 
         }

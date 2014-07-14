@@ -67,6 +67,11 @@ namespace Watertight
         {
             get { return ConsoleActive; }
         }
+
+        public static string[] LivingMessages
+        {
+            get { return AllMessages.Where(x => x.TTL > 0).Select(x => x.text).ToArray(); }
+        }
        
         static public void Initialize()
         {

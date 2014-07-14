@@ -29,5 +29,5 @@ Credits
  
 Copyright
 ---------
-Watertight is copyright 2012 Garrett Fleenor.
+Watertight is copyright 2012-2014 Garrett Fleenor.
 Watertight Engine is licensed under BSD.  If you would like to contribute, please do!
