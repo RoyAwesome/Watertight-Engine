@@ -19,7 +19,7 @@ namespace Watertight.Renderer
         {
             GL.NewList(displayList, ListMode.Compile);
             GL.PushMatrix();
-            GL.Begin(BeginMode.Triangles);
+            GL.Begin(PrimitiveType.Triangles);
             for (int i = 0; i < numVerticies; i++)
             {
                 int index = i * 4;

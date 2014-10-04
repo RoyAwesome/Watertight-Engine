@@ -55,7 +55,7 @@ namespace Watertight
             client.Connect("localhost", port, connectMessage);
 
 
-            Simulation.LuaComponent lc = Simulation.EntityComponentDictionary.NewComponent("TestLuaComponent");      
+            Simulation.LuaComponent lc = Simulation.EntityComponentDictionary.NewComponent("TestLuaComponent") as Simulation.LuaComponent;      
 
             foreach (Mod m in ModManager.Mods())
             {

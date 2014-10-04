@@ -23,26 +23,35 @@ namespace Watertight.Filesystem
 
     abstract class ResourceFactory<E> where E : Resource
     {
-        public abstract E getResource(StreamReader stream);
+        public abstract E GetResource(Stream stream);
 
-        public virtual E getResource(Uri path)
+        public virtual E GetResource(Uri path)
         {
-            return getResource(FileSystem.GetFileStream(path));
+            Stream s = FileSystem.GetFileStream(path);
+            E instance = GetResource(s);
+            s.Close();
+
+            return instance;
         }
     }
 
     internal class LuaFileFactory : ResourceFactory<LuaFile>
     {
-        public override LuaFile getResource(StreamReader stream)
+        public override LuaFile GetResource(Stream stream)
         {
             LuaFile file = new LuaFile();
-            file.Lua = stream.ReadToEnd();
+
+            using(StreamReader reader = new StreamReader(stream))
+            {
+                file.Lua = reader.ReadToEnd();
+            }
+            
             return file;
         }
 
-        public override LuaFile getResource(Uri path)
+        public override LuaFile GetResource(Uri path)
         {
-            LuaFile f = base.getResource(path);
+            LuaFile f = base.GetResource(path);
             f.mod = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             return f;
         }
@@ -50,9 +59,9 @@ namespace Watertight.Filesystem
 
     internal class DescriptorFactory : ResourceFactory<ModDescriptor>
     {
-        public override ModDescriptor getResource(StreamReader stream)
+        public override ModDescriptor GetResource(Stream stream)
         {
-            JsonTextReader reader = new JsonTextReader(stream);
+            JsonTextReader reader = new JsonTextReader(new StreamReader(stream));
             JsonSerializer ser = new JsonSerializer();
             return ser.Deserialize<ModDescriptor>(reader);
         }

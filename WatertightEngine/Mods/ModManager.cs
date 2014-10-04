@@ -156,7 +156,7 @@ namespace Watertight.Mods
                    Console.WriteLine("Loading Mod: " + dir);
                    using (StreamReader r = new StreamReader(dir + "/mod.lua"))
                    {
-                       LuaFile f = FileSystem.LoadResource<LuaFile>(r);
+                       LuaFile f = FileSystem.LoadResource<LuaFile>(r.BaseStream);
                        string modname = Path.GetFileName(dir);
                        f.Path = new Uri("script://" + modname  + "/mod.lua");
                        f.DoFile(LuaHelper.LuaVM);

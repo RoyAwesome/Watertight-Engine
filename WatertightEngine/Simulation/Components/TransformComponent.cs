@@ -17,7 +17,7 @@ namespace Watertight.Simulation
         {
             get
             {  
-                return Matrix4.CreateTranslation(Position) * Matrix4.Rotate(Rotation) * Matrix4.Scale(Scale);
+                return Matrix4.CreateTranslation(Position) * Matrix4.Rotate(Rotation) * Matrix4.CreateScale(Scale);
             }
         }
 

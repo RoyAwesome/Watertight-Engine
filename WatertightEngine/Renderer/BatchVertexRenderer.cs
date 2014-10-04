@@ -18,7 +18,7 @@ namespace Watertight.Renderer
     {
         public static RenderMode RenderMode = RenderMode.GL30;
 
-        public BaseShader ActiveShader { get; set; }
+        public Material ActiveShader { get; set; }
 
 
         protected List<float> vertexBuffer = new List<float>();

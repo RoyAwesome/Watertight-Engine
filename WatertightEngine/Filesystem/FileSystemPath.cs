@@ -25,8 +25,8 @@ namespace Watertight.Filesystem
             return ExistsInPath(FileSystem.ModDirectory + modFile, filePath);
         }
 
-        protected abstract StreamReader GetFileStream(string file, string path);
-        public virtual StreamReader GetFileStream(Uri path)
+        protected abstract Stream GetFileStream(string file, string path);
+        public virtual Stream GetFileStream(Uri path)
         {
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
@@ -52,12 +52,12 @@ namespace Watertight.Filesystem
             }
         }
 
-        protected override StreamReader GetFileStream(string file, string path)
+        protected override Stream GetFileStream(string file, string path)
         {
             ZipFile zip = new ZipFile(file + ".mod");           
             if (!zip.ContainsEntry(path)) throw new ArgumentException("File " + path.ToString() + " Does not exist in mod!");
             ZipEntry entry = zip[path];
-            return new StreamReader(entry.OpenReader());
+            return entry.OpenReader();
            
         }
 
@@ -84,7 +84,7 @@ namespace Watertight.Filesystem
             return ExistsInPath(directory + modFile + "/", filePath);
         }
 
-        public override StreamReader GetFileStream(Uri path)
+        public override Stream GetFileStream(Uri path)
         {
             string modFile = path.GetComponents(UriComponents.Host, UriFormat.UriEscaped);
             string filePath = path.GetComponents(UriComponents.Path, UriFormat.UriEscaped);
@@ -93,9 +93,9 @@ namespace Watertight.Filesystem
         }
 
 
-        protected override StreamReader GetFileStream(string file, string path)
+        protected override Stream GetFileStream(string file, string path)
         {
-            return new StreamReader(file + path);
+            return File.Open(file + path, FileMode.Open);
         }
     }
 

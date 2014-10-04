@@ -10,7 +10,7 @@ using Watertight.Resources;
 
 namespace Watertight.Renderer.Shaders
 {
-    public class BaseShader : IDisposable
+    public class Material : IDisposable
     {
         const bool validate = true;
 
@@ -22,17 +22,14 @@ namespace Watertight.Renderer.Shaders
 
         int[] shaders;
 
-        public BaseShader(int[] shaders)
+        public Material(int[] shaders)
         {
             Compile(shaders);
 
         }
 
-        public BaseShader(string VertexShader, string FragmentShader)
+        public Material(string VertexShader, string FragmentShader)
         {
-
-            
-
             int vshader = ShaderHelper.CompileShader(VertexShader, ShaderType.VertexShader);
             int fshader = ShaderHelper.CompileShader(FragmentShader, ShaderType.FragmentShader);
             int[] shaders = new int[] { vshader, fshader };
@@ -57,7 +54,8 @@ namespace Watertight.Renderer.Shaders
 
             int status = 0;
 
-            GL.GetProgram(program, ProgramParameter.LinkStatus, out status);
+            GL.GetProgram(program, GetProgramParameterName.LinkStatus, out status);
+            
             if (status != (int)All.True)
             {
                 string error = GL.GetProgramInfoLog(program);
@@ -73,14 +71,14 @@ namespace Watertight.Renderer.Shaders
             if (validate)
             {
                 GL.ValidateProgram(program);
-                GL.GetProgram(program, ProgramParameter.ValidateStatus, out status);
+                GL.GetProgram(program, GetProgramParameterName.ValidateStatus, out status);
                 if (status != (int)All.True)
                 {
                     Console.WriteLine("Error Valdating Shader: \n " + GL.GetProgramInfoLog(program));
                 }
-                GL.GetProgram(program, ProgramParameter.AttachedShaders, out status);
+                GL.GetProgram(program, GetProgramParameterName.AttachedShaders, out status);
                 Console.WriteLine("Attached Shaders: " + status);
-                GL.GetProgram(program, ProgramParameter.ActiveAttributes, out status);
+                GL.GetProgram(program, GetProgramParameterName.ActiveAttributes, out status);
                 Console.WriteLine("Active Attributes: " + status);
                 for (int i = 0; i < status; i++)
                 {
@@ -89,7 +87,7 @@ namespace Watertight.Renderer.Shaders
                     Console.WriteLine("\t" + GL.GetActiveAttrib(program, i, out size, out type) + " " + size + " " + type);
                 }
 
-                GL.GetProgram(program, ProgramParameter.ActiveUniforms, out status);
+                GL.GetProgram(program, GetProgramParameterName.ActiveUniforms, out status);
                 Console.WriteLine("Active Uniforms: " + status);
                 for (int i = 0; i < status; i++)
                 {
@@ -122,7 +120,7 @@ namespace Watertight.Renderer.Shaders
         }
 
         #region Destructor
-        ~BaseShader()
+        ~Material()
         {
             DeleteShaders();
         }

@@ -6,7 +6,8 @@ using Watertight.Filesystem;
 using System.Drawing;
 using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
-using Tao.OpenGl;
+using System.IO;
+
 
 namespace Watertight.Resources
 {
@@ -14,9 +15,10 @@ namespace Watertight.Resources
 
     internal class TextureLoader : ResourceFactory<Texture>
     {
-        public override Texture getResource(System.IO.StreamReader stream)
+        
+        public override Texture GetResource(Stream stream)
         {
-            return new Texture(new Bitmap(stream.BaseStream));            
+            return new Texture(new Bitmap(stream));            
         }
     }
 
@@ -67,6 +69,7 @@ namespace Watertight.Resources
         public void Destroy()
         {
             GL.DeleteTexture(textureID);
+            this.image.Dispose();
         }
 
         public Uri Path

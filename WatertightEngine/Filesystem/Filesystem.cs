@@ -19,6 +19,9 @@ namespace Watertight.Filesystem
 
         static Dictionary<Type, object> factories;
         static FileSystemPathFinder[] pathOrder;
+
+        static Dictionary<Uri, Resource> ResourceCache = new Dictionary<Uri, Resource>();
+        
         static FileSystem()
         {
             if (!Directory.Exists(ModDirectory)) Directory.CreateDirectory(ModDirectory);
@@ -28,14 +31,15 @@ namespace Watertight.Filesystem
             factories[typeof(LuaFile)] = new LuaFileFactory();
             factories[typeof(ModDescriptor)] = new DescriptorFactory();
             factories[typeof(Texture)] = new TextureLoader();
-            factories[typeof(Shader)] = new ShaderLoader();
+            factories[typeof(Effect)] = new EffectLoader();
+            factories[typeof(TextFile)] = new TextFileLoader();
 
             pathOrder = new FileSystemPathFinder[] {new FileSystemSearchPath(ModDirectory),
                                                     new ModFileSearchPath() };
 
         }
       
-        public static StreamReader GetFileStream(Uri path)
+        public static Stream GetFileStream(Uri path)
         {
             for (int i = 0; i < pathOrder.Length; i++)
             {
@@ -47,29 +51,37 @@ namespace Watertight.Filesystem
             throw new ArgumentException("Cannot find file: " + path.ToString() + " In any search path!");
         }
 
-       
+        
 
         public static E LoadResource<E>(Uri path) where E : Resource
         {
+            if(ResourceCache.ContainsKey(path))
+            {
+                return (E)ResourceCache[path];
+            }
 
-            E r = (factories[typeof(E)] as ResourceFactory<E>).getResource(path);
-            r.Path = path;
-            return r;
+            E resource = (factories[typeof(E)] as ResourceFactory<E>).GetResource(path);
+
+
+            resource.Path = path;
+            ResourceCache[path] = resource;
+
+            return resource;
         }
 
-        public static E LoadResource<E>(StreamReader reader) where E : Resource
+        public static E LoadResource<E>(Stream reader) where E : Resource
         {
             if (!factories.ContainsKey(typeof(E))) throw new ArgumentException("Cannot load type " + typeof(E).ToString());
             ResourceFactory<E> factory = (ResourceFactory<E>)factories[typeof(E)];
-            E ret = factory.getResource(reader);
+            E ret = factory.GetResource(reader);
             reader.Close();
             return ret;
         }
 
-        [BindFunction("FS", "LoadShader")]
-        public static Shader LoadShader(string path)
+        [BindFunction("FS", "LoadEffect")]
+        public static Effect LoadShader(string path)
         {
-            return LoadResource<Shader>(new Uri(path));
+            return LoadResource<Effect>(new Uri(path));
         }
 
 

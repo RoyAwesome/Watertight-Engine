@@ -65,7 +65,7 @@ namespace Watertight.Renderer
         protected override void doDraw()
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.DrawArrays(BeginMode.Triangles, 0, vertexBuffer.Count);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, vertexBuffer.Count);
         }
     }
 }

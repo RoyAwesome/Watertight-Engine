@@ -77,7 +77,7 @@ namespace Watertight.Renderer
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbos);
 
             ActiveShader.Assign();
-            GL.DrawArrays(BeginMode.Triangles, 0, numVerticies);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, numVerticies);
         }
 
 

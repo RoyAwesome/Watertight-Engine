@@ -103,20 +103,9 @@
     <Reference Include="NLua">
       <HintPath>..\packages\NLua.1.3.0.2\lib\net40\x86\NLua.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\OpenTK.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="OpenTK.Compatibility, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\OpenTK.Compatibility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="OpenTK.GLControl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\OpenTK.GLControl.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="QuickFont">
       <HintPath>..\Dependencies\QuickFont.dll</HintPath>
@@ -165,7 +154,6 @@
     <Compile Include="Renderer\GL30BatchVertexRenderer.cs" />
     <Compile Include="Renderer\BatcherException.cs" />
     <Compile Include="Renderer\NewRenderer\IMesh.cs" />
-    <Compile Include="Renderer\NewRenderer\Material.cs" />
     <Compile Include="Renderer\NewRenderer\Mesh.cs" />
     <Compile Include="Renderer\Shaders\BaseShader.cs" />
     <Compile Include="Renderer\Shaders\ShaderHelper.cs" />
@@ -178,8 +166,8 @@
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector2ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector3ShaderVariable.cs" />
     <Compile Include="Renderer\Shaders\ShaderVariables\Vector4ShaderVariable.cs" />
-    <Compile Include="Resources\EffectFile.cs" />
-    <Compile Include="Resources\Shader.cs" />
+    <Compile Include="Resources\Effect.cs" />
+    <Compile Include="Resources\TextFile.cs" />
     <Compile Include="Resources\Texture.cs" />
     <Compile Include="Simulation\Components\CameraComponent.cs" />
     <Compile Include="Simulation\Components\RenderComponent.cs" />
@@ -220,6 +208,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="LuaInclude\dbg.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
