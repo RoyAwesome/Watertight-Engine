@@ -1,6 +1,6 @@
 {
   "Shaders": {
-    "VertexShader": "basic30.vert",
-    "FragmentShader": "basic30.frag"
+    "VertexShader": "text://FileSystemMod/effects/basic30.vert",
+    "FragmentShader": "text://FileSystemMod/effects/basic30.frag"
   }
 }

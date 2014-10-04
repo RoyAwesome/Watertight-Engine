@@ -24,7 +24,7 @@ m:RegisterHook("Init", OnInit);
 
 
 function ResourceLoad()
-  shader = FS.LoadShader("shader://FileSystemMod/effects/basic30.effect" );
+  shader = FS.LoadEffect("shader://FileSystemMod/effects/basic30.effect" );
   
 end
 m:RegisterHook("ResourceLoad", ResourceLoad);
